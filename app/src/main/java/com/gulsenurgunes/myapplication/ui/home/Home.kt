@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.gulsenurgunes.myapplication.HomeCard
 import com.gulsenurgunes.myapplication.R
 
 @Composable
@@ -35,6 +34,7 @@ fun HomePage(navController: NavController) {
                 icon = painterResource(id = R.drawable.ic_launcher_foreground),
                 title = "Anime İzle",
                 onClick = {
+                    navController.navigate("anime")
                 }
             )
             Spacer(modifier = Modifier.width(16.dp))
@@ -44,6 +44,7 @@ fun HomePage(navController: NavController) {
                 icon = painterResource(id = R.drawable.ic_launcher_foreground),
                 title = "Film İzle",
                 onClick = {
+                    navController.navigate("film")
                 }
             )
         }
@@ -58,6 +59,7 @@ fun HomePage(navController: NavController) {
                 icon = painterResource(id = R.drawable.ic_launcher_foreground),
                 title = "Dizi İzle",
                 onClick = {
+                    navController.navigate("dizi")
                 }
             )
             Spacer(modifier = Modifier.width(16.dp))
@@ -67,6 +69,7 @@ fun HomePage(navController: NavController) {
                 icon = painterResource(id = R.drawable.ic_launcher_foreground),
                 title = "Oyun İzle",
                 onClick = {
+                    navController.navigate("oyun")
                 }
             )
         }

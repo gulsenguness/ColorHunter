@@ -47,7 +47,6 @@ fun HomeCard(
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
-
                 )
         }
     }
