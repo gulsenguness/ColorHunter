@@ -11,13 +11,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.gulsenurgunes.myapplication.DiziScreen
+import com.gulsenurgunes.myapplication.FilmScreen
+import com.gulsenurgunes.myapplication.OyunScreen
 import com.gulsenurgunes.myapplication.R
+import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.ColorfulPuzzle
+import com.gulsenurgunes.myapplication.ui.theme.MyApplicationTheme
 
 @Composable
-fun HomePage(navController: NavController) {
+fun HomePage(
+    navController: NavController
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -31,17 +41,17 @@ fun HomePage(navController: NavController) {
         ) {
             HomeCard(
                 modifier = Modifier.weight(1f),
-                icon = painterResource(id = R.drawable.ic_launcher_foreground),
-                title = "Anime İzle",
+                animationId = R.raw.bell,
+                title = "Colorful Puzzle",
                 onClick = {
-                    navController.navigate("anime")
+                    navController.navigate("colorfulpuzzle")
                 }
             )
             Spacer(modifier = Modifier.width(16.dp))
             HomeCard(
                 modifier = Modifier
                     .weight(1f),
-                icon = painterResource(id = R.drawable.ic_launcher_foreground),
+                animationId = R.raw.bell,
                 title = "Film İzle",
                 onClick = {
                     navController.navigate("film")
@@ -56,7 +66,7 @@ fun HomePage(navController: NavController) {
             HomeCard(
                 modifier = Modifier
                     .weight(1f),
-                icon = painterResource(id = R.drawable.ic_launcher_foreground),
+                animationId = R.raw.bell,
                 title = "Dizi İzle",
                 onClick = {
                     navController.navigate("dizi")
@@ -66,7 +76,7 @@ fun HomePage(navController: NavController) {
             HomeCard(
                 modifier = Modifier
                     .weight(1f),
-                icon = painterResource(id = R.drawable.ic_launcher_foreground),
+                animationId = R.raw.bell,
                 title = "Oyun İzle",
                 onClick = {
                     navController.navigate("oyun")
@@ -75,4 +85,20 @@ fun HomePage(navController: NavController) {
         }
     }
 
+}
+
+//Sil bunu
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    MyApplicationTheme {
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = "home") {
+            composable("home") { HomePage(navController) }
+            composable("colorfulpuzzle") { ColorfulPuzzle() }
+            composable("film") { FilmScreen() }
+            composable("dizi") { DiziScreen() }
+            composable("oyun") { OyunScreen() }
+        }
+    }
 }

@@ -59,4 +59,12 @@ dependencies {
 
     //Navigation
     implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.animation)
+    implementation(libs.androidx.navigation.compose.v2xx)
+
+    //Lottia
+    implementation(libs.lottie.compose)
+
+
 }
