@@ -66,5 +66,5 @@ dependencies {
     //Lottia
     implementation(libs.lottie.compose)
 
-
 }
+

@@ -1,5 +1,6 @@
 package com.gulsenurgunes.myapplication.ui.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,18 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.gulsenurgunes.myapplication.DiziScreen
-import com.gulsenurgunes.myapplication.FilmScreen
-import com.gulsenurgunes.myapplication.OyunScreen
 import com.gulsenurgunes.myapplication.R
-import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.ColorfulPuzzle
-import com.gulsenurgunes.myapplication.ui.theme.MyApplicationTheme
+
 
 @Composable
 fun HomePage(
@@ -88,17 +81,17 @@ fun HomePage(
 }
 
 //Sil bunu
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MyApplicationTheme {
-        val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "home") {
-            composable("home") { HomePage(navController) }
-            composable("colorfulpuzzle") { ColorfulPuzzle() }
-            composable("film") { FilmScreen() }
-            composable("dizi") { DiziScreen() }
-            composable("oyun") { OyunScreen() }
-        }
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GreetingPreview() {
+//    MyApplicationTheme {
+//        val navController = rememberNavController()
+//        NavHost(navController = navController, startDestination = "home") {
+//            composable("home") { HomePage(navController) }
+//            composable("colorfulpuzzle") { ColorfulPuzzle() }
+//            composable("film") { FilmScreen() }
+//            composable("dizi") { DiziScreen() }
+//            composable("oyun") { OyunScreen() }
+//        }
+//    }
+//}
