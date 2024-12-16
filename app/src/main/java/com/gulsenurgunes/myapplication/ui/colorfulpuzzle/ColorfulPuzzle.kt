@@ -3,6 +3,7 @@ package com.gulsenurgunes.myapplication.ui.colorfulpuzzle
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,21 +30,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gulsenurgunes.myapplication.PuzzleCard
+import com.gulsenurgunes.myapplication.R
 
 @Composable
 fun ColorfulPuzzle() {
     val cardStates = remember { MutableList(9) { mutableStateOf(false) } }
-
+    val images = listOf(
+        R.drawable.noel1,
+        R.drawable.noel1,
+        R.drawable.noel2,
+        R.drawable.noel2,
+        R.drawable.noel3,
+        R.drawable.noel3,
+        R.drawable.noel4,
+        R.drawable.noel4,
+        R.drawable.noelhediye,
+    ).shuffled()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Spacer(modifier = Modifier.height(200.dp))
 
         Text(
@@ -57,9 +70,10 @@ fun ColorfulPuzzle() {
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(9){index->
+            items(9) { index ->
                 FlipCard(
                     isFlipped = cardStates[index].value,
+                    imageRes = images[index],
                     onClick = { cardStates[index].value = !cardStates[index].value }
                 )
             }
@@ -68,7 +82,7 @@ fun ColorfulPuzzle() {
 }
 
 @Composable
-fun FlipCard(isFlipped: Boolean, onClick: () -> Unit) {
+fun FlipCard(isFlipped: Boolean, imageRes: Int, onClick: () -> Unit) {
     val rotation = remember { Animatable(0f) }
 
     LaunchedEffect(isFlipped) {
@@ -103,13 +117,16 @@ fun FlipCard(isFlipped: Boolean, onClick: () -> Unit) {
                 modifier = Modifier.fillMaxSize()
             ) {
                 Box(contentAlignment = Alignment.Center) {
-                    Text("Back", color = Color.Black)
+                    Image(
+                        painter = painterResource(id = imageRes),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
             }
         }
     }
 }
-
 
 
 @Preview(showBackground = true)
