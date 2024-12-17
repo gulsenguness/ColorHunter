@@ -15,14 +15,14 @@ import com.gulsenurgunes.myapplication.navigation.FilmScreen
 import com.gulsenurgunes.myapplication.navigation.OyunScreen
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.ColorfulPuzzle
 import com.gulsenurgunes.myapplication.ui.home.HomePage
-import com.gulsenurgunes.myapplication.ui.theme.MyApplicationTheme
+import com.gulsenurgunes.myapplication.ui.theme.NYTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyApplicationTheme {
+            NYTheme {
                 AppNavigation()
             }
         }
@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    MyApplicationTheme {
+    NYTheme {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "home") {
             composable("home") { HomePage(navController) }

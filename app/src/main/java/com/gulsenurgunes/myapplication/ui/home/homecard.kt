@@ -9,19 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.rememberLottieComposition
 import androidx.compose.foundation.clickable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieConstants
 
 
 @Composable
 fun HomeCard(
     modifier: Modifier = Modifier,
-    animationId:Int,
+    animationId: Int,
     title: String,
     onClick: () -> Unit,
     cardColor: Color = Color.Red
@@ -33,7 +28,7 @@ fun HomeCard(
             .background(cardColor),
         shape = MaterialTheme.shapes.medium,
 
-    ) {
+        ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -41,19 +36,11 @@ fun HomeCard(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(animationId))
-            LottieAnimation(
-                composition = composition,
-                iterations = LottieConstants.IterateForever,
-                modifier=Modifier
-                    .size(84.dp)
-                    .padding(bottom = 8.dp)
-            )
-
+            AnimationItem(animationId)
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
-                )
+            )
         }
     }
 }

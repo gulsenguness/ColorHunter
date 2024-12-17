@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.gulsenurgunes.myapplication.R
+import com.gulsenurgunes.myapplication.ui.theme.LocalPadding
 
 
 @Composable
