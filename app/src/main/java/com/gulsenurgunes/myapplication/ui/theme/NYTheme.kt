@@ -7,13 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 
-
 object NYTheme {
     val padding: FMPadding
         @Composable
         @ReadOnlyComposable
         get() = LocalPadding.current
-
 
     private val DarkColorScheme = darkColorScheme(
         primary = Purple80,
@@ -34,7 +32,7 @@ object NYTheme {
     onTertiary = Color.White,
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
-    */
+         */
     )
 }
 

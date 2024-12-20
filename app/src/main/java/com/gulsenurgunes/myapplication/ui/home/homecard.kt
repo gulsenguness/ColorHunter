@@ -1,6 +1,7 @@
 package com.gulsenurgunes.myapplication.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -8,10 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.foundation.clickable
 import androidx.compose.ui.graphics.Color
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
-
 
 @Composable
 fun homeCard(
@@ -28,7 +27,7 @@ fun homeCard(
             .background(cardColor),
         shape = MaterialTheme.shapes.medium,
 
-        ) {
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

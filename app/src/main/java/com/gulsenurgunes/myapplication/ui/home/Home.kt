@@ -16,7 +16,6 @@ import com.gulsenurgunes.myapplication.R
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
-
 @Composable
 fun homePage(
     navController: NavController
@@ -77,6 +76,4 @@ fun homePage(
             )
         }
     }
-
 }
-

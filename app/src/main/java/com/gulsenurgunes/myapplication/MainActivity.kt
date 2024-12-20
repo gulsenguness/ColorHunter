@@ -12,7 +12,6 @@ import androidx.navigation.compose.rememberNavController
 import com.gulsenurgunes.myapplication.navigation.AppNavigation
 import com.gulsenurgunes.myapplication.navigation.DiziScreen
 import com.gulsenurgunes.myapplication.navigation.OyunScreen
-import com.gulsenurgunes.myapplication.ui.colorfulmaze.Cell
 import com.gulsenurgunes.myapplication.ui.colorfulmaze.colorfulMaze
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.colorfulPuzzle
 import com.gulsenurgunes.myapplication.ui.home.homePage
@@ -30,7 +29,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -45,7 +43,10 @@ fun GreetingPreview() {
                         listOf(Cell(0, 0, false), Cell(0, 1, true), Cell(0, 2, false)),
                         listOf(Cell(1, 0, false), Cell(1, 1, false), Cell(1, 2, false)),
                         listOf(Cell(2, 0, false), Cell(2, 1, true), Cell(2, 2, false))
-                    )
+                    ),
+                    onCellClick = { cell->
+                        println("Hücre tıklandı: ${cell.row}, ${cell.col}")
+                    }
                 )
             }
             composable("dizi") { DiziScreen() }
@@ -53,8 +54,3 @@ fun GreetingPreview() {
         }
     }
 }
-
-
-
-
-
