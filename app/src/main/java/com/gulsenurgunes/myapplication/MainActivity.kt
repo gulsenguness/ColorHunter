@@ -11,8 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.gulsenurgunes.myapplication.navigation.AppNavigation
 import com.gulsenurgunes.myapplication.navigation.DiziScreen
-import com.gulsenurgunes.myapplication.navigation.OyunScreen
-import com.gulsenurgunes.myapplication.ui.colorfulmaze.colorfulMaze
+import com.gulsenurgunes.myapplication.navigation.colorfulMaze
+import com.gulsenurgunes.myapplication.ui.carddetective.CardDetective
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.colorfulPuzzle
 import com.gulsenurgunes.myapplication.ui.home.homePage
 import com.gulsenurgunes.myapplication.ui.theme.nyTheme
@@ -37,20 +37,9 @@ fun GreetingPreview() {
         NavHost(navController = navController, startDestination = "home") {
             composable("home") { homePage(navController) }
             composable("colorfulpuzzle") { colorfulPuzzle() }
-            composable("film") {
-                colorfulMaze(
-                    maze = listOf(
-                        listOf(Cell(0, 0, false), Cell(0, 1, true), Cell(0, 2, false)),
-                        listOf(Cell(1, 0, false), Cell(1, 1, false), Cell(1, 2, false)),
-                        listOf(Cell(2, 0, false), Cell(2, 1, true), Cell(2, 2, false))
-                    ),
-                    onCellClick = { cell->
-                        println("Hücre tıklandı: ${cell.row}, ${cell.col}")
-                    }
-                )
-            }
+            composable("film") { colorfulMaze() }
             composable("dizi") { DiziScreen() }
-            composable("oyun") { OyunScreen() }
+            composable("carddetective") { CardDetective() }
         }
     }
 }

@@ -69,9 +69,9 @@ fun homePage(
                 modifier = Modifier
                     .weight(1f),
                 animationId = R.raw.bell,
-                title = "Oyun İzle",
+                title = "Card Detective",
                 onClick = {
-                    navController.navigate("oyun")
+                    navController.navigate("carddetective")
                 }
             )
         }
