@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -65,5 +66,15 @@ dependencies {
     //Lottie
     implementation(libs.lottie.compose)
 
+    //Detekt
+    detektPlugins(libs.detekt)
+}
+
+detekt {
+    config.setFrom(file("$rootDir/detekt/detektConfig.yml"))
+    source.from(files("src/main/kotlin"))
+    parallel = true
+    autoCorrect = true
+    buildUponDefaultConfig = true
 }
 
