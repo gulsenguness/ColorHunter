@@ -1,6 +1,5 @@
 package com.gulsenurgunes.myapplication.ui.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,28 +11,28 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.gulsenurgunes.myapplication.R
-import com.gulsenurgunes.myapplication.ui.theme.LocalPadding
+import com.gulsenurgunes.myapplication.ui.theme.NYTheme
+import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
 
 @Composable
-fun HomePage(
+fun homePage(
     navController: NavController
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(NYTheme.padding.dimension16),
+        verticalArrangement = Arrangement.spacedBy(padding.dimension16)
     ) {
-        Spacer(modifier = Modifier.height(250.dp))
+        Spacer(modifier = Modifier.height(padding.dimension250))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            HomeCard(
+            homeCard(
                 modifier = Modifier.weight(1f),
                 animationId = R.raw.bell,
                 title = "Colorful Puzzle",
@@ -41,14 +40,14 @@ fun HomePage(
                     navController.navigate("colorfulpuzzle")
                 }
             )
-            Spacer(modifier = Modifier.width(16.dp))
-            HomeCard(
+            Spacer(modifier = Modifier.width(padding.dimension16))
+            homeCard(
                 modifier = Modifier
                     .weight(1f),
                 animationId = R.raw.bell,
-                title = "Film İzle",
+                title = "Colorful Maze",
                 onClick = {
-                    navController.navigate("film")
+                    navController.navigate("colorfulmaze")
                 }
             )
         }
@@ -57,7 +56,7 @@ fun HomePage(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            HomeCard(
+            homeCard(
                 modifier = Modifier
                     .weight(1f),
                 animationId = R.raw.bell,
@@ -66,8 +65,8 @@ fun HomePage(
                     navController.navigate("dizi")
                 }
             )
-            Spacer(modifier = Modifier.width(16.dp))
-            HomeCard(
+            Spacer(modifier = Modifier.width(padding.dimension16))
+            homeCard(
                 modifier = Modifier
                     .weight(1f),
                 animationId = R.raw.bell,
@@ -81,18 +80,3 @@ fun HomePage(
 
 }
 
-//Sil bunu
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    MyApplicationTheme {
-//        val navController = rememberNavController()
-//        NavHost(navController = navController, startDestination = "home") {
-//            composable("home") { HomePage(navController) }
-//            composable("colorfulpuzzle") { ColorfulPuzzle() }
-//            composable("film") { FilmScreen() }
-//            composable("dizi") { DiziScreen() }
-//            composable("oyun") { OyunScreen() }
-//        }
-//    }
-//}

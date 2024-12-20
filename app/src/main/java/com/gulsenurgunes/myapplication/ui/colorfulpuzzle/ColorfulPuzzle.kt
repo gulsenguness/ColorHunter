@@ -7,29 +7,23 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.gulsenurgunes.myapplication.R
-import com.gulsenurgunes.myapplication.ui.theme.NYTheme
+import com.gulsenurgunes.myapplication.ui.components.lottieBellAnimation
+import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
 @Composable
-fun ColorfulPuzzle() {
+fun colorfulPuzzle() {
     val cardStates = remember { MutableList(9) { mutableStateOf(false) } }
     val openedCards = remember { mutableStateListOf<Int>() }
     val images = listOf(
@@ -46,26 +40,26 @@ fun ColorfulPuzzle() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(NYTheme.padding.dimension16),
+            .padding(padding.dimension16),
+        verticalArrangement = Arrangement.spacedBy(padding.dimension16),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(80.dp))
-        LottieBellAnimation()
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(padding.dimension80))
+        lottieBellAnimation()
+        Spacer(modifier = Modifier.height(padding.dimension50))
         Text(
             text = "Colorful Puzzle",
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(padding.dimension16)
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(padding.dimension8))
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(padding.dimension8),
+            verticalArrangement = Arrangement.spacedBy(padding.dimension8)
         ) {
             items(9) { index ->
-                FlipCard(
+                flipCard(
                     isFlipped = cardStates[index].value,
                     imageRes = images[index],
                     onClick = {
@@ -76,18 +70,6 @@ fun ColorfulPuzzle() {
         }
 
     }
-}
-
-@Composable
-fun LottieBellAnimation() {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.bell))
-    LottieAnimation(
-        composition = composition,
-        iterations = LottieConstants.IterateForever,
-        modifier = Modifier
-            .size(84.dp)
-            .padding(bottom = 8.dp)
-    )
 }
 
 private fun handleCardClick(
@@ -115,5 +97,5 @@ private fun handleCardClick(
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    ColorfulPuzzle()
+    colorfulPuzzle()
 }

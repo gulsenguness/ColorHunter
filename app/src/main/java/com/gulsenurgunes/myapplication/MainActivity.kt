@@ -11,18 +11,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.gulsenurgunes.myapplication.navigation.AppNavigation
 import com.gulsenurgunes.myapplication.navigation.DiziScreen
-import com.gulsenurgunes.myapplication.navigation.FilmScreen
 import com.gulsenurgunes.myapplication.navigation.OyunScreen
-import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.ColorfulPuzzle
-import com.gulsenurgunes.myapplication.ui.home.HomePage
-import com.gulsenurgunes.myapplication.ui.theme.NYTheme
+import com.gulsenurgunes.myapplication.ui.colorfulmaze.Cell
+import com.gulsenurgunes.myapplication.ui.colorfulmaze.colorfulMaze
+import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.colorfulPuzzle
+import com.gulsenurgunes.myapplication.ui.home.homePage
+import com.gulsenurgunes.myapplication.ui.theme.nyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            NYTheme {
+            nyTheme {
                 AppNavigation()
             }
         }
@@ -33,12 +34,20 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    NYTheme {
+    nyTheme {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "home") {
-            composable("home") { HomePage(navController) }
-            composable("colorfulpuzzle") { ColorfulPuzzle() }
-            composable("film") { FilmScreen() }
+            composable("home") { homePage(navController) }
+            composable("colorfulpuzzle") { colorfulPuzzle() }
+            composable("film") {
+                colorfulMaze(
+                    maze = listOf(
+                        listOf(Cell(0, 0, false), Cell(0, 1, true), Cell(0, 2, false)),
+                        listOf(Cell(1, 0, false), Cell(1, 1, false), Cell(1, 2, false)),
+                        listOf(Cell(2, 0, false), Cell(2, 1, true), Cell(2, 2, false))
+                    )
+                )
+            }
             composable("dizi") { DiziScreen() }
             composable("oyun") { OyunScreen() }
         }

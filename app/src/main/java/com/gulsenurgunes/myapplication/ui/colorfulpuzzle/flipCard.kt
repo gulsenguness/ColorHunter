@@ -19,11 +19,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.gulsenurgunes.myapplication.R
+import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
 @Composable
-fun FlipCard(isFlipped: Boolean, imageRes: Int, onClick: () -> Unit) {
+fun flipCard(isFlipped: Boolean, imageRes: Int, onClick: () -> Unit) {
     val rotation = remember { Animatable(0f) }
 
     LaunchedEffect(isFlipped) {
@@ -38,7 +38,7 @@ fun FlipCard(isFlipped: Boolean, imageRes: Int, onClick: () -> Unit) {
 
     Box(
         modifier = Modifier
-            .size(100.dp)
+            .size(padding.dimension100)
             .graphicsLayer {
                 rotationY = rotation.value
                 cameraDistance = 8 * density
@@ -57,7 +57,7 @@ fun FlipCard(isFlipped: Boolean, imageRes: Int, onClick: () -> Unit) {
                     Image(
                         painter = painterResource(id = R.drawable.tree),
                         contentDescription = null,
-                        modifier = Modifier.size(60.dp)
+                        modifier = Modifier.size(padding.dimension60)
                     )
                 }
             }
