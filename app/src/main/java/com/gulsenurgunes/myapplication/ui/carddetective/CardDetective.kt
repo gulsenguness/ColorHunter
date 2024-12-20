@@ -24,6 +24,8 @@ import com.gulsenurgunes.myapplication.DetectiveViewModel
 import com.gulsenurgunes.myapplication.R
 
 
+
+//Deneme
 @Composable
 fun CardDetective(viewModel: DetectiveViewModel) {
     val cards by viewModel.cards.observeAsState(emptyList())
@@ -31,56 +33,74 @@ fun CardDetective(viewModel: DetectiveViewModel) {
     val imageToMatch by viewModel.imageToMatch.observeAsState(null)
 
     LaunchedEffect(Unit) {
-        val initialCards = generateCards()
-        viewModel.setCards(initialCards)
-        val randomImage = initialCards.random().imageId
-        viewModel.setImageToMatch(randomImage)
+        initializeGame(viewModel)
     }
 
     Column(modifier = Modifier.background(Color.White)) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            modifier = Modifier.weight(1f)
-        ) {
-            items(cards.take(9)) { card ->
-                Card(
-                    onClick = {
-                        if (!card.isMatched && !card.isFaceUp) {
-                            card.isFaceUp = true
-                            checkForMatch(card, cards, imageToMatch, viewModel)
-                        }
-                    }
-                ) {
-                    if (card.isFaceUp) {
-                        Image(painterResource(id = card.imageId), contentDescription = null)
-                    } else {
-                        Box(
-                            modifier = Modifier
-                                .size(100.dp)
-                                .background(Color.Gray)
-                        )
-                    }
-                }
-            }
-        }
-
-        imageToMatch?.let {
-            Card(
-                modifier = Modifier
-                    .size(100.dp)
-                    .background(Color.LightGray),
-                onClick = {
-                }
-            ) {
-                Image(painterResource(id = it), contentDescription = null)
-            }
-        }
-
-        Text("Score: $score", modifier = Modifier.padding(16.dp))
+        DisplayCards(cards, viewModel, imageToMatch)
+        DisplayImageToMatch(imageToMatch)
+        DisplayScore(score)
     }
 }
 
+private fun initializeGame(viewModel: DetectiveViewModel) {
+    val initialCards = generateCards()
+    viewModel.setCards(initialCards)
+    val randomImage = initialCards.random().imageId
+    viewModel.setImageToMatch(randomImage)
+}
 
+@Composable
+private fun DisplayCards(cards: List<DetectiveCard>, viewModel: DetectiveViewModel, imageToMatch: Int?) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+    ) {
+        items(cards.take(9)) { card ->
+            Card(
+                onClick = {
+                    if (!card.isMatched && !card.isFaceUp) {
+                        card.isFaceUp = true
+                        checkForMatch(card, cards, imageToMatch, viewModel)
+                    }
+                }
+            ) {
+                DisplayCardImage(card)
+            }
+        }
+    }
+}
+
+@Composable
+private fun DisplayCardImage(card: DetectiveCard) {
+    if (card.isFaceUp) {
+        Image(painterResource(id = card.imageId), contentDescription = null)
+    } else {
+        Box(
+            modifier = Modifier
+                .size(100.dp)
+                .background(Color.Gray)
+        )
+    }
+}
+
+@Composable
+private fun DisplayImageToMatch(imageToMatch: Int?) {
+    imageToMatch?.let {
+        Card(
+            modifier = Modifier
+                .size(100.dp)
+                .background(Color.LightGray),
+            onClick = {}
+        ) {
+            Image(painterResource(id = it), contentDescription = null)
+        }
+    }
+}
+
+@Composable
+private fun DisplayScore(score: Int) {
+    Text("Score: $score", modifier = Modifier.padding(16.dp))
+}
 
 fun generateCards(): List<DetectiveCard> {
     val imageIds = listOf(
@@ -94,8 +114,7 @@ fun generateCards(): List<DetectiveCard> {
         R.drawable.ic_launcher_background,
         R.drawable.tree
     )
-    val shuffledCards = imageIds.shuffled()
-    return shuffledCards.map {
+    return imageIds.shuffled().map {
         DetectiveCard(
             imageId = it,
             isFaceUp = false,
@@ -104,7 +123,6 @@ fun generateCards(): List<DetectiveCard> {
         )
     }
 }
-
 
 fun checkForMatch(
     selectedCard: DetectiveCard,
@@ -115,28 +133,37 @@ fun checkForMatch(
     viewModel.addSelectedCard(selectedCard)
 
     if (viewModel.selectedCards.value?.size == 2) {
-        val selectedCards = viewModel.selectedCards.value!!
-
-        if (selectedCards[0].imageId == selectedCards[1].imageId) {
-            selectedCards[0].isMatched = true
-            selectedCards[1].isMatched = true
-            viewModel.updateScore(viewModel.score.value?.plus(10) ?: 0)
-        } else {
-            selectedCards[0].isFaceUp = false
-            selectedCards[1].isFaceUp = false
-            viewModel.updateScore(viewModel.score.value?.minus(5) ?: 0)
-        }
-        viewModel.setCards(cards)
-
-        viewModel.resetSelectedCards()
+        handleCardMatch(viewModel, cards)
     } else {
         selectedCard.isFaceUp = true
         viewModel.setCards(cards)
     }
+
     if (selectedCard.imageId == imageToMatch) {
         viewModel.updateScore(viewModel.score.value?.plus(20) ?: 0) // Bonus puan
     }
 }
 
+private fun handleCardMatch(viewModel: DetectiveViewModel, cards: List<DetectiveCard>) {
+    val selectedCards = viewModel.selectedCards.value!!
 
+    if (selectedCards[0].imageId == selectedCards[1].imageId) {
+        markCardsAsMatched(selectedCards)
+        viewModel.updateScore(viewModel.score.value?.plus(10) ?: 0)
+    } else {
+        hideSelectedCards(selectedCards)
+        viewModel.updateScore(viewModel.score.value?.minus(5) ?: 0)
+    }
+    viewModel.setCards(cards)
+    viewModel.resetSelectedCards()
+}
 
+private fun markCardsAsMatched(cards: List<DetectiveCard>) {
+    cards[0].isMatched = true
+    cards[1].isMatched = true
+}
+
+private fun hideSelectedCards(cards: List<DetectiveCard>) {
+    cards[0].isFaceUp = false
+    cards[1].isFaceUp = false
+}
