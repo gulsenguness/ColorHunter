@@ -14,6 +14,7 @@ import com.gulsenurgunes.myapplication.navigation.AppNavigation
 import com.gulsenurgunes.myapplication.navigation.DiziScreen
 import com.gulsenurgunes.myapplication.navigation.colorfulMaze
 import com.gulsenurgunes.myapplication.ui.carddetective.CardDetective
+import com.gulsenurgunes.myapplication.ui.carddetective.DetectiveViewModel
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.colorfulPuzzle
 import com.gulsenurgunes.myapplication.ui.home.homePage
 import com.gulsenurgunes.myapplication.ui.theme.nyTheme

@@ -1,9 +1,12 @@
-package com.gulsenurgunes.myapplication
+package com.gulsenurgunes.myapplication.ui.carddetective
 
 import android.app.Application
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.gulsenurgunes.myapplication.data.DetectiveCard
 
 class DetectiveViewModel(application: Application) : AndroidViewModel(application) {
     private val _score = MutableLiveData<Int>()
@@ -12,6 +15,12 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
     val cards: LiveData<List<DetectiveCard>> get() = _cards
     private val _imageToMatch = MutableLiveData<Int?>()
     val imageToMatch: LiveData<Int?> get() = _imageToMatch
+    private val _matchMessage = mutableStateOf("")
+    val matchMessage: State<String> = _matchMessage
+
+    fun setMatchMessage(message: String) {
+        _matchMessage.value = message
+    }
 
     private val _selectedCards = MutableLiveData<List<DetectiveCard>>(emptyList())
     val selectedCards: LiveData<List<DetectiveCard>> get() = _selectedCards

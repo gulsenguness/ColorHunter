@@ -5,7 +5,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.gulsenurgunes.myapplication.DetectiveViewModel
+import com.gulsenurgunes.myapplication.ui.carddetective.DetectiveViewModel
 import com.gulsenurgunes.myapplication.ui.carddetective.CardDetective
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.colorfulPuzzle
 import com.gulsenurgunes.myapplication.ui.home.homePage
@@ -19,7 +19,7 @@ fun AppNavigation() {
     ) {
         composable("home") { homePage(navController = navController) }
         composable("colorfulpuzzle") { colorfulPuzzle() }
-        composable("colorfulmaze") {colorfulMaze() }
+        composable("colorfulmaze") { colorfulMaze() }
         composable("dizi") { DiziScreen() }
         composable("carddetective") {
             val detectiveViewModel: DetectiveViewModel = viewModel()

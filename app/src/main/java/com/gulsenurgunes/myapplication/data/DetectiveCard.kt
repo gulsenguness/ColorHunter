@@ -1,4 +1,4 @@
-package com.gulsenurgunes.myapplication
+package com.gulsenurgunes.myapplication.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class DetectiveCard(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val imageId: Int,
-    var isFaceUp: Boolean ,
+    var isFaceUp: Boolean,
     var isMatched: Boolean,
-    val level:Int,
+    val level: Int,
 )
