@@ -5,23 +5,27 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -32,7 +36,6 @@ import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.flipCard
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 import kotlinx.coroutines.delay
 
-// Deneme
 @Composable
 fun CardDetective(
     viewModel: DetectiveViewModel
@@ -41,7 +44,6 @@ fun CardDetective(
     val score by viewModel.score.observeAsState(0)
     val imageToMatch by viewModel.imageToMatch.observeAsState(null)
     val isGameReady by viewModel.isGameReady.observeAsState(false)
-
 
     LaunchedEffect(Unit) {
         initializeGame(viewModel)
@@ -55,9 +57,8 @@ fun CardDetective(
     }
 }
 
-
 @Composable
-private fun DisplayCards(
+private fun DisplayCards( //How it should look when the cards are face down and face down
     cards: List<DetectiveCard>,
     viewModel: DetectiveViewModel,
     imageToMatch: Int?,
@@ -69,14 +70,16 @@ private fun DisplayCards(
             .padding(padding.dimension16),
         verticalArrangement = Arrangement.spacedBy(padding.dimension16)
     ) {
+        Spacer(modifier = Modifier.height(padding.dimension80))
         if (imageToMatch != null) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1f)
+                    .aspectRatio(2f)
                     .padding(bottom = padding.dimension16),
                 contentAlignment = Alignment.Center
-            ) {
+            )
+            {
                 Image(
                     painter = painterResource(id = imageToMatch),
                     contentDescription = "Image to Match",
@@ -86,6 +89,7 @@ private fun DisplayCards(
                 )
             }
         }
+        Spacer(modifier = Modifier.height(80.dp))
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             modifier = Modifier.fillMaxSize(),
@@ -122,24 +126,42 @@ private fun initializeGame(
 
 @Composable
 private fun DisplayCardImage(card: DetectiveCard) {
-    val cardSize = 100.dp
     if (card.isFaceUp) {
         Image(
             painterResource(id = card.imageId),
             contentDescription = null,
-            modifier = Modifier.size(cardSize)
+            modifier = Modifier.size(80.dp)
         )
     } else {
         Box(
             modifier = Modifier
-                .size(100.dp)
+                .size(80.dp)
                 .background(Color.Gray)
         )
     }
 }
 
-
-
+@Composable
+fun DisplayImageToMatch(imageToMatch: Int?) {
+    imageToMatch?.let {
+        Card(
+            modifier = Modifier
+                .size(80.dp)
+                .padding(8.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .shadow(8.dp, RoundedCornerShape(16.dp)),
+            onClick = {}
+        ) {
+            Image(
+                painter = painterResource(id = it),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(RoundedCornerShape(16.dp))
+            )
+        }
+    }
+}
 
 fun generateCards(): List<DetectiveCard> {
     val imageIds = listOf(

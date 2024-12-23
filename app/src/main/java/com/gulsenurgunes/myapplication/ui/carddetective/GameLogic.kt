@@ -12,44 +12,68 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gulsenurgunes.myapplication.data.DetectiveCard
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 object GameLogic {
+    private val matchedImages = mutableListOf<Int>()
+
     fun checkForMatch(
         selectedCard: DetectiveCard,
         cards: List<DetectiveCard>,
-        imageToMatch: Int?,
-        viewModel: DetectiveViewModel
+        currentImageToMatch: Int?,
+        viewModel: DetectiveViewModel,
+        scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
+
     ) {
         viewModel.addSelectedCard(selectedCard)
 
         if (viewModel.selectedCards.value?.size == 2) {
-            handleCardMatch(viewModel, cards)
+            handleCardMatch(viewModel, cards, currentImageToMatch)
         } else {
-            selectedCard.isFaceUp = true
+            if (selectedCard.imageId == currentImageToMatch) {
+                selectedCard.isFaceUp = true  // Bu kart doğru ise açıyoruz
+                viewModel.updateScore(viewModel.score.value?.plus(20) ?: 0)
+            } else {
+                selectedCard.isFaceUp = false
+            }
             viewModel.setCards(cards)
         }
 
-        if (selectedCard.imageId == imageToMatch) {
-            viewModel.updateScore(viewModel.score.value?.plus(20) ?: 0)
+        if (selectedCard.imageId == currentImageToMatch) {
+            matchedImages.add(currentImageToMatch ?: -1)
+            scope.launch {
+                delay(3000)
+                viewModel.nextImageToMatch()
+            }
         }
     }
 
     private fun handleCardMatch(
         viewModel: DetectiveViewModel,
-        cards: List<DetectiveCard>
+        cards: List<DetectiveCard>,
+        currentImageToMatch: Int?
     ) {
         val selectedCards = viewModel.selectedCards.value!!
 
-        if (selectedCards[0].imageId == selectedCards[1].imageId) {
-            markCardsAsMatched(selectedCards)
-            viewModel.updateScore(viewModel.score.value?.plus(10) ?: 0)
-        } else {
-            hideSelectedCards(selectedCards)
-            viewModel.updateScore(viewModel.score.value?.minus(5) ?: 0)
+        if (selectedCards.size == 2) {
+            val firstCard = selectedCards[0]
+            val secondCard = selectedCards[1]
+
+            if (firstCard.imageId == currentImageToMatch && secondCard.imageId == currentImageToMatch) {
+                firstCard.isFaceUp = true
+                secondCard.isFaceUp = true
+                markCardsAsMatched(listOf(firstCard, secondCard))
+            } else {
+                firstCard.isFaceUp = false
+                secondCard.isFaceUp = false
+            }
+            viewModel.setCards(cards)
         }
-        viewModel.setCards(cards)
-        viewModel.resetSelectedCards()
     }
+
 
     private fun markCardsAsMatched(cards: List<DetectiveCard>) {
         cards[0].isMatched = true

@@ -11,23 +11,15 @@ import com.gulsenurgunes.myapplication.data.DetectiveCard
 class DetectiveViewModel(application: Application) : AndroidViewModel(application) {
     private val _score = MutableLiveData<Int>()
     val score: LiveData<Int> get() = _score
+
     private val _cards = MutableLiveData<List<DetectiveCard>>()
     val cards: LiveData<List<DetectiveCard>> get() = _cards
+
     private val _imageToMatch = MutableLiveData<Int?>()
     val imageToMatch: LiveData<Int?> get() = _imageToMatch
-    private val _matchMessage = mutableStateOf("")
-    val matchMessage: State<String> = _matchMessage
+
     private val _isGameReady = MutableLiveData<Boolean>(false)
     val isGameReady: LiveData<Boolean> get() = _isGameReady
-
-    fun setGameReady(isReady: Boolean) {
-        _isGameReady.value = isReady
-    }
-
-
-    fun setMatchMessage(message: String) {
-        _matchMessage.value = message
-    }
 
     private val _selectedCards = MutableLiveData<List<DetectiveCard>>(emptyList())
     val selectedCards: LiveData<List<DetectiveCard>> get() = _selectedCards
@@ -36,8 +28,8 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
         _score.value = 0
     }
 
-    fun updateScore(newScore: Int) {
-        _score.value = newScore
+    fun setGameReady(isReady: Boolean) {
+        _isGameReady.value = isReady
     }
 
     fun setImageToMatch(imageId: Int?) {
@@ -58,8 +50,19 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
         _selectedCards.value = emptyList()
     }
 
+    fun updateScore(newScore: Int) {
+        _score.value = newScore
+    }
+
+    fun nextImageToMatch() {
+        val randomImage = generateCards().random().imageId
+        setImageToMatch(randomImage)
+    }
+
     fun resetGame() {
         _score.value = 0
         resetSelectedCards()
+        nextImageToMatch()
     }
 }
+
