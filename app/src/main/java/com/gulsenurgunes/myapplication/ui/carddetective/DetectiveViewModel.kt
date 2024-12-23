@@ -17,6 +17,13 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
     val imageToMatch: LiveData<Int?> get() = _imageToMatch
     private val _matchMessage = mutableStateOf("")
     val matchMessage: State<String> = _matchMessage
+    private val _isGameReady = MutableLiveData<Boolean>(false)
+    val isGameReady: LiveData<Boolean> get() = _isGameReady
+
+    fun setGameReady(isReady: Boolean) {
+        _isGameReady.value = isReady
+    }
+
 
     fun setMatchMessage(message: String) {
         _matchMessage.value = message

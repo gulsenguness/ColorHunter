@@ -27,8 +27,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.gulsenurgunes.myapplication.data.DetectiveCard
 import com.gulsenurgunes.myapplication.R
+import com.gulsenurgunes.myapplication.ui.carddetective.GameLogic.checkForMatch
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.flipCard
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
+import kotlinx.coroutines.delay
 
 // Deneme
 @Composable
@@ -38,34 +40,33 @@ fun CardDetective(
     val cards by viewModel.cards.observeAsState(emptyList())
     val score by viewModel.score.observeAsState(0)
     val imageToMatch by viewModel.imageToMatch.observeAsState(null)
+    val isGameReady by viewModel.isGameReady.observeAsState(false)
+
 
     LaunchedEffect(Unit) {
         initializeGame(viewModel)
+        delay(5000)
+        viewModel.setGameReady(true)
     }
     Column(modifier = Modifier.background(Color.White)) {
-        DisplayCards(cards, viewModel, imageToMatch,)
+        DisplayCards(cards, viewModel, imageToMatch, isGameReady)
         DisplayImageToMatch(imageToMatch)
         DisplayScore(score)
     }
 }
 
-private fun initializeGame(
-    viewModel: DetectiveViewModel
-) {
-    val initialCards = generateCards()
-    viewModel.setCards(initialCards)
-    val randomImage = initialCards.random().imageId
-    viewModel.setImageToMatch(randomImage)
-}
 
 @Composable
 private fun DisplayCards(
     cards: List<DetectiveCard>,
     viewModel: DetectiveViewModel,
     imageToMatch: Int?,
+    isGameReady: Boolean
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(padding.dimension16),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding.dimension16),
         verticalArrangement = Arrangement.spacedBy(padding.dimension16)
     ) {
         if (imageToMatch != null) {
@@ -92,27 +93,42 @@ private fun DisplayCards(
             verticalArrangement = Arrangement.spacedBy(padding.dimension8)
         ) {
             items(cards.take(9)) { card ->
-                DisplayCardImage(card = card)
-                flipCard(
-                    isFlipped = card.isFaceUp,
-                    imageRes = card.imageId,
-                    onClick = {
-                        if (!card.isMatched && !card.isFaceUp) {
-                            checkForMatch(card, cards, imageToMatch, viewModel)
+                if (isGameReady) {
+                    flipCard(
+                        isFlipped = card.isFaceUp,
+                        imageRes = card.imageId,
+                        onClick = {
+                            if (!card.isMatched && !card.isFaceUp) {
+                                checkForMatch(card, cards, imageToMatch, viewModel)
+                            }
                         }
-                    }
-                )
+                    )
+                } else {
+                    DisplayCardImage(card.copy(isFaceUp = true))
+                }
             }
         }
     }
 }
 
+private fun initializeGame(
+    viewModel: DetectiveViewModel
+) {
+    val initialCards = generateCards()
+    viewModel.setCards(initialCards)
+    val randomImage = initialCards.random().imageId
+    viewModel.setImageToMatch(randomImage)
+}
 
 @Composable
 private fun DisplayCardImage(card: DetectiveCard) {
-    val cardSize=100.dp
+    val cardSize = 100.dp
     if (card.isFaceUp) {
-        Image(painterResource(id = card.imageId), contentDescription = null, modifier = Modifier.size(cardSize))
+        Image(
+            painterResource(id = card.imageId),
+            contentDescription = null,
+            modifier = Modifier.size(cardSize)
+        )
     } else {
         Box(
             modifier = Modifier
@@ -122,24 +138,8 @@ private fun DisplayCardImage(card: DetectiveCard) {
     }
 }
 
-@Composable
-private fun DisplayImageToMatch(imageToMatch: Int?) {
-    imageToMatch?.let {
-        Card(
-            modifier = Modifier
-                .size(100.dp)
-                .background(Color.LightGray),
-            onClick = {}
-        ) {
-            Image(painterResource(id = it), contentDescription = null)
-        }
-    }
-}
 
-@Composable
-private fun DisplayScore(score: Int) {
-    Text("Score: $score", modifier = Modifier.padding(16.dp))
-}
+
 
 fun generateCards(): List<DetectiveCard> {
     val imageIds = listOf(
@@ -163,51 +163,7 @@ fun generateCards(): List<DetectiveCard> {
     }
 }
 
-fun checkForMatch(
-    selectedCard: DetectiveCard,
-    cards: List<DetectiveCard>,
-    imageToMatch: Int?,
-    viewModel: DetectiveViewModel
-) {
-    viewModel.addSelectedCard(selectedCard)
 
-    if (viewModel.selectedCards.value?.size == 2) {
-        handleCardMatch(viewModel, cards)
-    } else {
-        selectedCard.isFaceUp = true
-        viewModel.setCards(cards)
-    }
 
-    if (selectedCard.imageId == imageToMatch) {
-        viewModel.updateScore(viewModel.score.value?.plus(20) ?: 0)
-    }
-}
-
-private fun handleCardMatch(
-    viewModel: DetectiveViewModel,
-    cards: List<DetectiveCard>
-) {
-    val selectedCards = viewModel.selectedCards.value!!
-
-    if (selectedCards[0].imageId == selectedCards[1].imageId) {
-        markCardsAsMatched(selectedCards)
-        viewModel.updateScore(viewModel.score.value?.plus(10) ?: 0)
-    } else {
-        hideSelectedCards(selectedCards)
-        viewModel.updateScore(viewModel.score.value?.minus(5) ?: 0)
-    }
-    viewModel.setCards(cards)
-    viewModel.resetSelectedCards()
-}
-
-private fun markCardsAsMatched(cards: List<DetectiveCard>) {
-    cards[0].isMatched = true
-    cards[1].isMatched = true
-}
-
-private fun hideSelectedCards(cards: List<DetectiveCard>) {
-    cards[0].isFaceUp = false
-    cards[1].isFaceUp = false
-}
 
 
