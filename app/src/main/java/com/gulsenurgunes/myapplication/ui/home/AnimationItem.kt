@@ -11,7 +11,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
 @Composable
-fun animationItem(
+fun AnimationItem(
     animationId: Int,
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(animationId))

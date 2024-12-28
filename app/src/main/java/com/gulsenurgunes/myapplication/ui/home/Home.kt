@@ -31,7 +31,7 @@ fun homePage(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            homeCard(
+            HomeCard(
                 modifier = Modifier.weight(1f),
                 animationId = R.raw.bell,
                 title = "Colorful Puzzle",
@@ -40,7 +40,7 @@ fun homePage(
                 }
             )
             Spacer(modifier = Modifier.width(padding.dimension16))
-            homeCard(
+            HomeCard(
                 modifier = Modifier
                     .weight(1f),
                 animationId = R.raw.bell,
@@ -55,17 +55,17 @@ fun homePage(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            homeCard(
+            HomeCard(
                 modifier = Modifier
                     .weight(1f),
                 animationId = R.raw.bell,
-                title = "Dizi İzle",
+                title = "Christmas Password",
                 onClick = {
-                    navController.navigate("dizi")
+                    navController.navigate("christmaspassword")
                 }
             )
             Spacer(modifier = Modifier.width(padding.dimension16))
-            homeCard(
+            HomeCard(
                 modifier = Modifier
                     .weight(1f),
                 animationId = R.raw.bell,

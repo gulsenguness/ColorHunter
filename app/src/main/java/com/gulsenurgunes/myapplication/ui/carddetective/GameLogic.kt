@@ -17,6 +17,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+const val NUM_OF_CARD_SCOR1 = 50
+const val NUM_OF_CARD_SCOR2 = 30
+const val NUM_OF_CARD_SCOR3 = 10
+
 object GameLogic {
     private val matchedImages = mutableListOf<Int>()
 
@@ -35,11 +39,10 @@ object GameLogic {
         } else {
             if (selectedCard.imageId == currentImageToMatch) {
                 selectedCard.isFaceUp = true
-                // Puan ekleme mantığı: Tıklama sayısına göre puan ver
                 val points = when (selectedCard.clickCount) {
-                    1 -> 50  // İlk tıklama doğruysa 50 puan
-                    2 -> 30  // İkinci tıklama doğruysa 30 puan
-                    else -> 10 // 3. tıklama ve sonrasına 10 puan
+                    1 -> NUM_OF_CARD_SCOR1
+                    2 -> NUM_OF_CARD_SCOR2
+                    else -> NUM_OF_CARD_SCOR3
                 }
                 viewModel.updateScore(viewModel.score.value?.plus(points) ?: 0)
             } else {
@@ -47,7 +50,6 @@ object GameLogic {
             }
             viewModel.setCards(cards)
         }
-
         if (selectedCard.imageId == currentImageToMatch) {
             matchedImages.add(currentImageToMatch)
             scope.launch {
@@ -80,16 +82,10 @@ object GameLogic {
         }
     }
 
-
     private fun markCardsAsMatched(cards: List<DetectiveCard>) {
         cards[0].isMatched = true
         cards[1].isMatched = true
     }
-
-//    private fun hideSelectedCards(cards: List<DetectiveCard>) {
-//        cards[0].isFaceUp = false
-//        cards[1].isFaceUp = false
-//    }
 }
 
 @Composable

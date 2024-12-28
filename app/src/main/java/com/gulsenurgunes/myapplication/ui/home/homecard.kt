@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
 @Composable
-fun homeCard(
+fun HomeCard(
     modifier: Modifier = Modifier,
     animationId: Int,
     title: String,
@@ -35,7 +35,7 @@ fun homeCard(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            animationItem(animationId)
+            AnimationItem(animationId)
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,

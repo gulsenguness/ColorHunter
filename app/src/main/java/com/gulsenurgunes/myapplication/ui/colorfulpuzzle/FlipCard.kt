@@ -23,7 +23,7 @@ import com.gulsenurgunes.myapplication.R
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
 @Composable
-fun flipCard(isFlipped: Boolean, imageRes: Int, onClick: () -> Unit) {
+fun FlipCard(isFlipped: Boolean, imageRes: Int, onClick: () -> Unit) {
     val rotation = remember { Animatable(0f) }
 
     LaunchedEffect(isFlipped) {

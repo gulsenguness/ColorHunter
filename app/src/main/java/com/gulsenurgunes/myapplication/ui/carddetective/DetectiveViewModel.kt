@@ -74,11 +74,9 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-
 //    fun resetGame() {
 //        _score.value = 0
 //        resetSelectedCards()
 //        nextImageToMatch()
 //    }
 }
-

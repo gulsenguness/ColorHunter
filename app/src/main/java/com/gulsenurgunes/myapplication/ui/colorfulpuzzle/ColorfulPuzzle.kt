@@ -21,9 +21,12 @@ import com.gulsenurgunes.myapplication.R
 import com.gulsenurgunes.myapplication.ui.components.lottieBellAnimation
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
+const val NUM_OF_CARD_STATES = 9
+const val NUM_OF_COLUMNS = 3
+
 @Composable
 fun colorfulPuzzle() {
-    val cardStates = remember { MutableList(9) { mutableStateOf(false) } }
+    val cardStates = remember { MutableList(NUM_OF_CARD_STATES) { mutableStateOf(false) } }
     val openedCards = remember { mutableStateListOf<Int>() }
     val images = listOf(
         R.drawable.noel1,
@@ -52,13 +55,13 @@ fun colorfulPuzzle() {
         )
         Spacer(modifier = Modifier.height(padding.dimension8))
         LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
+            columns = GridCells.Fixed(NUM_OF_COLUMNS),
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.spacedBy(padding.dimension8),
             verticalArrangement = Arrangement.spacedBy(padding.dimension8)
         ) {
-            items(9) { index ->
-                flipCard(
+            items(NUM_OF_CARD_STATES) { index ->
+                FlipCard(
                     isFlipped = cardStates[index].value,
                     imageRes = images[index],
                     onClick = {

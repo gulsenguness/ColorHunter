@@ -30,10 +30,10 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.gulsenurgunes.myapplication.data.DetectiveCard
 import com.gulsenurgunes.myapplication.R
+import com.gulsenurgunes.myapplication.data.DetectiveCard
 import com.gulsenurgunes.myapplication.ui.carddetective.GameLogic.checkForMatch
-import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.flipCard
+import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.FlipCard
 import com.gulsenurgunes.myapplication.ui.components.lottieBellAnimation
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 import kotlinx.coroutines.delay
@@ -67,8 +67,11 @@ fun CardDetective(
     }
 }
 
+const val NUM_OF_CARD_STATES = 9
+const val NUM_OF_COLUMNS = 3
+
 @Composable
-private fun DisplayCards( //How it should look when the cards are face down and face down
+private fun DisplayCards( // How it should look when the cards are face down and face down
     cards: List<DetectiveCard>,
     viewModel: DetectiveViewModel,
     imageToMatch: Int?,
@@ -82,7 +85,8 @@ private fun DisplayCards( //How it should look when the cards are face down and 
     ) {
         Text(
             text = "Card Detective",
-            modifier = Modifier.padding(padding.dimension16)
+            modifier = Modifier
+                .padding(padding.dimension16)
                 .padding()
         )
         if (imageToMatch != null) {
@@ -92,8 +96,7 @@ private fun DisplayCards( //How it should look when the cards are face down and 
                     .aspectRatio(2f)
                     .padding(bottom = padding.dimension16),
                 contentAlignment = Alignment.Center
-            )
-            {
+            ) {
                 Image(
                     painter = painterResource(id = imageToMatch),
                     contentDescription = "Image to Match",
@@ -104,14 +107,14 @@ private fun DisplayCards( //How it should look when the cards are face down and 
             }
         }
         LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
+            columns = GridCells.Fixed(NUM_OF_COLUMNS),
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.spacedBy(padding.dimension8),
             verticalArrangement = Arrangement.spacedBy(padding.dimension8)
         ) {
-            items(cards.take(9)) { card ->
+            items(cards.take(NUM_OF_CARD_STATES)) { card ->
                 if (isGameReady) {
-                    flipCard(
+                    FlipCard(
                         isFlipped = card.isFaceUp,
                         imageRes = card.imageId,
                         onClick = {
@@ -127,7 +130,6 @@ private fun DisplayCards( //How it should look when the cards are face down and 
         }
     }
 }
-
 
 @Composable
 private fun DisplayCardImage(card: DetectiveCard) {
@@ -146,7 +148,6 @@ private fun DisplayCardImage(card: DetectiveCard) {
     }
 }
 
-
 private fun initializeGame(viewModel: DetectiveViewModel) {
     val initialCards = generateCards()
     viewModel.setCards(initialCards)
@@ -162,7 +163,6 @@ private fun initializeGame(viewModel: DetectiveViewModel) {
 
     viewModel.setUsedImages(usedImages)
 }
-
 
 @Composable
 fun DisplayImageToMatch(viewModel: DetectiveViewModel) {
@@ -186,10 +186,9 @@ fun DisplayImageToMatch(viewModel: DetectiveViewModel) {
             )
         }
     } ?: Text(
-            text = "Oyun bitti! 🎉",
-            modifier = Modifier.padding(16.dp)
-        )
-
+        text = "Oyun bitti! 🎉",
+        modifier = Modifier.padding(16.dp)
+    )
 }
 
 fun generateCards(): List<DetectiveCard> {
@@ -213,8 +212,3 @@ fun generateCards(): List<DetectiveCard> {
         )
     }
 }
-
-
-
-
-
