@@ -28,6 +28,7 @@ object GameLogic {
         scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 
     ) {
+
         viewModel.addSelectedCard(selectedCard)
 
         if (viewModel.selectedCards.value?.size == 2) {

@@ -1,6 +1,7 @@
 package com.gulsenurgunes.myapplication.ui.carddetective
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
@@ -23,6 +24,12 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
 
     private val _selectedCards = MutableLiveData<List<DetectiveCard>>(emptyList())
     val selectedCards: LiveData<List<DetectiveCard>> get() = _selectedCards
+    private val _usedImages = MutableLiveData<Set<Int>>(emptySet())
+    val usedImages: Set<Int> get() = _usedImages.value ?: emptySet()
+
+    fun setUsedImages(images: Set<Int>) {
+        _usedImages.value = images
+    }
 
     init {
         _score.value = 0
@@ -55,9 +62,21 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun nextImageToMatch() {
-        val randomImage = generateCards().random().imageId
-        setImageToMatch(randomImage)
+        val availableImages = generateCards()
+            .map { it.imageId }
+            .filter { it !in usedImages }
+
+        if (availableImages.isNotEmpty()) {
+            val nextImage = availableImages.random()
+            setImageToMatch(nextImage)
+            val newUsedImages = usedImages.toMutableSet()
+            newUsedImages.add(nextImage)
+            setUsedImages(newUsedImages)
+        } else {
+            setImageToMatch(null)
+        }
     }
+
 
     fun resetGame() {
         _score.value = 0

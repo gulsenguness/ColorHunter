@@ -1,5 +1,6 @@
 package com.gulsenurgunes.myapplication.ui.carddetective
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -52,7 +54,7 @@ fun CardDetective(
     }
     Column(modifier = Modifier.background(Color.White)) {
         DisplayCards(cards, viewModel, imageToMatch, isGameReady)
-        DisplayImageToMatch(imageToMatch)
+        DisplayImageToMatch(viewModel)
         DisplayScore(score)
     }
 }
@@ -89,7 +91,7 @@ private fun DisplayCards( //How it should look when the cards are face down and 
                 )
             }
         }
-        Spacer(modifier = Modifier.height(80.dp))
+        Spacer(modifier = Modifier.height(120.dp))
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             modifier = Modifier.fillMaxSize(),
@@ -115,14 +117,6 @@ private fun DisplayCards( //How it should look when the cards are face down and 
     }
 }
 
-private fun initializeGame(
-    viewModel: DetectiveViewModel
-) {
-    val initialCards = generateCards()
-    viewModel.setCards(initialCards)
-    val randomImage = initialCards.random().imageId
-    viewModel.setImageToMatch(randomImage)
-}
 
 @Composable
 private fun DisplayCardImage(card: DetectiveCard) {
@@ -141,8 +135,28 @@ private fun DisplayCardImage(card: DetectiveCard) {
     }
 }
 
+
+private fun initializeGame(viewModel: DetectiveViewModel) {
+    val initialCards = generateCards()
+    viewModel.setCards(initialCards)
+    val usedImages = viewModel.usedImages.toMutableSet()
+    val availableImages = initialCards.map { it.imageId }.filter { it !in usedImages }
+    if (availableImages.isNotEmpty()) {
+        val randomImage = availableImages.random()
+        usedImages.add(randomImage)
+        viewModel.setImageToMatch(randomImage)
+    } else {
+        viewModel.setImageToMatch(null)
+    }
+
+    viewModel.setUsedImages(usedImages)
+}
+
+
 @Composable
-fun DisplayImageToMatch(imageToMatch: Int?) {
+fun DisplayImageToMatch(viewModel: DetectiveViewModel) {
+    val imageToMatch by viewModel.imageToMatch.observeAsState()
+
     imageToMatch?.let {
         Card(
             modifier = Modifier
@@ -160,7 +174,11 @@ fun DisplayImageToMatch(imageToMatch: Int?) {
                     .clip(RoundedCornerShape(16.dp))
             )
         }
-    }
+    } ?: Text(
+            text = "Oyun bitti! 🎉",
+            modifier = Modifier.padding(16.dp)
+        )
+
 }
 
 fun generateCards(): List<DetectiveCard> {
@@ -171,9 +189,9 @@ fun generateCards(): List<DetectiveCard> {
         R.drawable.noel4,
         R.drawable.noelhediye,
         R.drawable.tree,
-        R.drawable.ic_launcher_foreground,
-        R.drawable.ic_launcher_background,
-        R.drawable.tree
+        R.drawable.noel7,
+        R.drawable.noel9,
+        R.drawable.noel8
     )
     return imageIds.shuffled().map {
         DetectiveCard(
