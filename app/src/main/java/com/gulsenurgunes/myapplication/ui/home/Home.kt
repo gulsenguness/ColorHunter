@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.gulsenurgunes.myapplication.R
+import com.gulsenurgunes.myapplication.ui.components.LottieSnow
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
@@ -26,7 +28,12 @@ fun homePage(
             .padding(NYTheme.padding.dimension16),
         verticalArrangement = Arrangement.spacedBy(padding.dimension16)
     ) {
-        Spacer(modifier = Modifier.height(padding.dimension250))
+        LottieSnow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(padding.dimension16)
+        )
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -75,5 +82,6 @@ fun homePage(
                 }
             )
         }
+        Spacer(modifier = Modifier.height(padding.dimension150))
     }
 }
