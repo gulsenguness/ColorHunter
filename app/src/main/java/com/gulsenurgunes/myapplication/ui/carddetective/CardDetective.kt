@@ -1,6 +1,5 @@
 package com.gulsenurgunes.myapplication.ui.carddetective
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +34,7 @@ import com.gulsenurgunes.myapplication.data.DetectiveCard
 import com.gulsenurgunes.myapplication.R
 import com.gulsenurgunes.myapplication.ui.carddetective.GameLogic.checkForMatch
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.flipCard
+import com.gulsenurgunes.myapplication.ui.components.lottieBellAnimation
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 import kotlinx.coroutines.delay
 
@@ -52,10 +52,18 @@ fun CardDetective(
         delay(5000)
         viewModel.setGameReady(true)
     }
-    Column(modifier = Modifier.background(Color.White)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .padding(padding.dimension16)
+    ) {
+        Spacer(modifier = Modifier.height(padding.dimension80))
+        lottieBellAnimation()
+        Spacer(modifier = Modifier.height(padding.dimension16))
+        DisplayScore(score)
         DisplayCards(cards, viewModel, imageToMatch, isGameReady)
         DisplayImageToMatch(viewModel)
-        DisplayScore(score)
     }
 }
 
@@ -72,7 +80,11 @@ private fun DisplayCards( //How it should look when the cards are face down and 
             .padding(padding.dimension16),
         verticalArrangement = Arrangement.spacedBy(padding.dimension16)
     ) {
-        Spacer(modifier = Modifier.height(padding.dimension80))
+        Text(
+            text = "Card Detective",
+            modifier = Modifier.padding(padding.dimension16)
+                .padding()
+        )
         if (imageToMatch != null) {
             Box(
                 modifier = Modifier
@@ -91,7 +103,6 @@ private fun DisplayCards( //How it should look when the cards are face down and 
                 )
             }
         }
-        Spacer(modifier = Modifier.height(120.dp))
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             modifier = Modifier.fillMaxSize(),

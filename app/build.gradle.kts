@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.detekt)
+    id ("kotlin-kapt")
+
 }
 
 android {
@@ -70,6 +72,8 @@ dependencies {
     //Room
     val room_version = "2.6.1"
     implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
     //Detekt
     detektPlugins(libs.detekt)

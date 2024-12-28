@@ -26,17 +26,22 @@ object GameLogic {
         currentImageToMatch: Int?,
         viewModel: DetectiveViewModel,
         scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
-
     ) {
-
+        selectedCard.clickCount++
         viewModel.addSelectedCard(selectedCard)
 
         if (viewModel.selectedCards.value?.size == 2) {
             handleCardMatch(viewModel, cards, currentImageToMatch)
         } else {
             if (selectedCard.imageId == currentImageToMatch) {
-                selectedCard.isFaceUp = true  // Bu kart doğru ise açıyoruz
-                viewModel.updateScore(viewModel.score.value?.plus(20) ?: 0)
+                selectedCard.isFaceUp = true
+                // Puan ekleme mantığı: Tıklama sayısına göre puan ver
+                val points = when (selectedCard.clickCount) {
+                    1 -> 50  // İlk tıklama doğruysa 50 puan
+                    2 -> 30  // İkinci tıklama doğruysa 30 puan
+                    else -> 10 // 3. tıklama ve sonrasına 10 puan
+                }
+                viewModel.updateScore(viewModel.score.value?.plus(points) ?: 0)
             } else {
                 selectedCard.isFaceUp = false
             }
@@ -44,7 +49,7 @@ object GameLogic {
         }
 
         if (selectedCard.imageId == currentImageToMatch) {
-            matchedImages.add(currentImageToMatch ?: -1)
+            matchedImages.add(currentImageToMatch)
             scope.launch {
                 delay(3000)
                 viewModel.nextImageToMatch()
@@ -81,10 +86,10 @@ object GameLogic {
         cards[1].isMatched = true
     }
 
-    private fun hideSelectedCards(cards: List<DetectiveCard>) {
-        cards[0].isFaceUp = false
-        cards[1].isFaceUp = false
-    }
+//    private fun hideSelectedCards(cards: List<DetectiveCard>) {
+//        cards[0].isFaceUp = false
+//        cards[1].isFaceUp = false
+//    }
 }
 
 @Composable

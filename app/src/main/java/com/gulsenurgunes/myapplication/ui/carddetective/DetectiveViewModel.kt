@@ -1,9 +1,6 @@
 package com.gulsenurgunes.myapplication.ui.carddetective
 
 import android.app.Application
-import android.util.Log
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,7 +16,7 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
     private val _imageToMatch = MutableLiveData<Int?>()
     val imageToMatch: LiveData<Int?> get() = _imageToMatch
 
-    private val _isGameReady = MutableLiveData<Boolean>(false)
+    private val _isGameReady = MutableLiveData(false)
     val isGameReady: LiveData<Boolean> get() = _isGameReady
 
     private val _selectedCards = MutableLiveData<List<DetectiveCard>>(emptyList())
@@ -53,9 +50,9 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
         _selectedCards.value = newSelectedCards
     }
 
-    fun resetSelectedCards() {
-        _selectedCards.value = emptyList()
-    }
+//    private fun resetSelectedCards() {
+//        _selectedCards.value = emptyList()
+//    }
 
     fun updateScore(newScore: Int) {
         _score.value = newScore
@@ -78,10 +75,10 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
 
-    fun resetGame() {
-        _score.value = 0
-        resetSelectedCards()
-        nextImageToMatch()
-    }
+//    fun resetGame() {
+//        _score.value = 0
+//        resetSelectedCards()
+//        nextImageToMatch()
+//    }
 }
 
