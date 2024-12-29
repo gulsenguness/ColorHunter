@@ -70,8 +70,12 @@ dependencies {
     //Lottie
     implementation(libs.lottie.compose)
 
+    //M
+    implementation(libs.material3)
+    implementation(libs.androidx.material)
+
+
     //Room
-    val room_version = "2.6.1"
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)

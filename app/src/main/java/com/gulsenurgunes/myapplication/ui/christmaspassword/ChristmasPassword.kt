@@ -13,7 +13,7 @@ import com.gulsenurgunes.myapplication.R
 import com.gulsenurgunes.myapplication.ui.components.LottieSnow
 
 @Composable
-fun ChristmasPassword(){
+fun ChristmasPassword() {
     val puzzlePieces = listOf<Int?>(
         R.drawable.noelhediye,
         R.drawable.noel1,
@@ -38,7 +38,7 @@ fun ChristmasPassword(){
         PuzzleGameScreen(
             question = "Noel Baba'nın kızağını hangi hayvan çeker?",
             option = listOf("Ren geyiği", "Kurt", "Kedi"),
-            onOptionSelected = { answer -> println("Seçilen cevap: \$answer") } ,
+            onOptionSelected = { answer -> println("Seçilen cevap: \$answer") },
             puzzlePieces = puzzlePieces,
             score = 50,
             progress = 0.5f

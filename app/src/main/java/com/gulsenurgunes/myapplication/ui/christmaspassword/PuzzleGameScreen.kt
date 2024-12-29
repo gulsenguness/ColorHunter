@@ -85,7 +85,7 @@ fun PuzzleSection(puzzlePieces: List<Int?>) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1f) // Kare görünüm için
+            .aspectRatio(1f)
     ) {
         Grid(
             items = puzzlePieces,
@@ -144,10 +144,10 @@ fun ScoreAndProgressSection(score: Int, progress: Float) {
             style = MaterialTheme.typography.bodySmall
         )
         LinearProgressIndicator(
-            progress = progress,
+            progress = { progress },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp)
+                .padding(vertical = 8.dp),
         )
     }
 }
