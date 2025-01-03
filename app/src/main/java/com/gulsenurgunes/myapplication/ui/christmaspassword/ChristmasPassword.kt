@@ -32,13 +32,13 @@ fun ChristmasPassword() {
     ) {
         LottieSnow(
             modifier = Modifier
-                .size(150.dp)
+                .size(200.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
         PuzzleGameScreen(
             question = "Noel Baba'nın kızağını hangi hayvan çeker?",
             option = listOf("Ren geyiği", "Kurt", "Kedi"),
-            onOptionSelected = { answer -> println("Seçilen cevap: \$answer") },
+            onOptionSelected = { println("Seçilen cevap: \$answer") },
             puzzlePieces = puzzlePieces,
             score = 50,
             progress = 0.5f
