@@ -7,11 +7,11 @@ import androidx.room.Query
 
 @Dao
 interface QuestionDao {
-    @Query("SELECT * FROM questions WHERE isAnswered=0 LIMIT 1")
+    @Query("SELECT * FROM questions ORDER BY isAnswered=0 LIMIT 1")
     fun getNextQuestion(): Question?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertQuestions(questions: List<Question>)
+    suspend fun insertQuestions(questions: com.gulsenurgunes.myapplication.Question)
 
     @Query("UPDATE questions SET isAnswered = 1 WHERE id = :id")
     suspend fun markQuestionAsAnswered(id: Int)

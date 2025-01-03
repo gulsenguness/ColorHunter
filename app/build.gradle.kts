@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.adapters)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -74,11 +75,15 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.androidx.material)
 
-
     //Room
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx.v250)
+    implementation(libs.androidx.lifecycle.livedata.ktx.v250)
+
+    //Gson
+    implementation(libs.gson)
 
     //Detekt
     detektPlugins(libs.detekt)

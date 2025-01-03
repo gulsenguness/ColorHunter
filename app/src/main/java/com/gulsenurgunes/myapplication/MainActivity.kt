@@ -39,7 +39,10 @@ fun GreetingPreview() {
             composable("home") { homePage(navController) }
             composable("colorfulpuzzle") { colorfulPuzzle() }
             composable("film") { colorfulMaze() }
-            composable("christmaspassword") { ChristmasPassword() }
+            composable("christmaspassword") {
+                val christmasPasswordViewModel: ChristmasPasswordViewModel = viewModel()
+                ChristmasPassword(viewModel = christmasPasswordViewModel)
+            }
             composable("carddetective") {
                 val detectiveViewModel: DetectiveViewModel = viewModel()
                 CardDetective(viewModel = detectiveViewModel)

@@ -9,22 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.gulsenurgunes.myapplication.R
+import com.gulsenurgunes.myapplication.ChristmasPasswordViewModel
 import com.gulsenurgunes.myapplication.ui.components.LottieSnow
 
 @Composable
-fun ChristmasPassword() {
-    val puzzlePieces = listOf<Int?>(
-        R.drawable.noelhediye,
-        R.drawable.noel1,
-        R.drawable.noel2,
-        R.drawable.noel3,
-        R.drawable.noel4,
-        R.drawable.noel7,
-        R.drawable.noel8,
-        R.drawable.noel9,
-        R.drawable.tree,
-    )
+fun ChristmasPassword(viewModel: ChristmasPasswordViewModel) {
     Column(
         modifier = Modifier
             .padding(16.dp),
@@ -35,14 +24,7 @@ fun ChristmasPassword() {
                 .size(200.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        PuzzleGameScreen(
-            question = "Noel Baba'nın kızağını hangi hayvan çeker?",
-            option = listOf("Ren geyiği", "Kurt", "Kedi"),
-            onOptionSelected = { println("Seçilen cevap: \$answer") },
-            puzzlePieces = puzzlePieces,
-            score = 50,
-            progress = 0.5f
-        )
+        PuzzleGameScreen(viewModel)
     }
 }
 

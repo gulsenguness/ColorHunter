@@ -18,36 +18,39 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.gulsenurgunes.myapplication.ChristmasPasswordViewModel
 
 @Composable
 fun PuzzleGameScreen(
-    question: String,
-    option: List<String>,
-    onOptionSelected: (String) -> Unit,
-    puzzlePieces: List<Int?>,
-    score: Int,
-    progress: Float
+    viewModel: ChristmasPasswordViewModel
 ) {
+    val currentQuestion by viewModel.currentQuestion.observeAsState()
+    val puzzlePieces by viewModel.puzzleState.observeAsState(emptyList())
+    val score by viewModel.score.observeAsState(0)
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF5F5F5))
     ) {
-        QuestionSection(
-            question = question,
-            option = option,
-            onOptionSelected = onOptionSelected
-        )
+        currentQuestion?.let { question ->
+            QuestionSection(
+                question = question.text,
+                option = question.option,
+                onOptionSelected = {answer -> viewModel.onAnswerSelected(answer)}
+            )
+        }
         Spacer(modifier = Modifier.height(16.dp))
-        PuzzleSection(puzzlePieces = puzzlePieces)
+        puzzlePieces?.let { PuzzleSection(puzzlePieces = it) }
         Spacer(modifier = Modifier.height(16.dp))
-        ScoreAndProgressSection(score = score, progress = progress)
+        puzzlePieces?.let { ScoreAndProgressSection(score = score, progress = it.count { it != null }) }
     }
 }
 
@@ -134,7 +137,7 @@ fun <T> Grid(
 }
 
 @Composable
-fun ScoreAndProgressSection(score: Int, progress: Float) {
+fun ScoreAndProgressSection(score: Int, progress: Int) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -144,7 +147,7 @@ fun ScoreAndProgressSection(score: Int, progress: Float) {
             style = MaterialTheme.typography.bodySmall
         )
         LinearProgressIndicator(
-            progress = { progress },
+            progress = { progress.toFloat() },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
