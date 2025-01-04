@@ -64,7 +64,7 @@ class ChristmasPasswordViewModel(
                     openPuzzlePiece()
                 } else {
                 }
-update                loadNextQuestion()
+                loadNextQuestion()
             }
         }
     }
