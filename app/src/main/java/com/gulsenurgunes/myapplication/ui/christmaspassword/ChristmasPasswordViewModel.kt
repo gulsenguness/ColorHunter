@@ -33,7 +33,6 @@ class ChristmasPasswordViewModel(
         loadNextQuestion()
         initializePuzzle()
         insertSampleQuestions()
-        checkAnswerAndMoveNext(answer = "")
     }
 
     private fun initializePuzzle() {
@@ -52,28 +51,6 @@ class ChristmasPasswordViewModel(
             } catch (e: Exception) {
                 Log.e("ViewModel", "Error loading question: ${e.message}")
             }
-        }
-    }
-
-    private fun checkAnswerAndMoveNext(answer: String) {
-        viewModelScope.launch {
-            val currentQuestion = currentQuestion.value
-            if (currentQuestion != null) {
-                if (currentQuestion.correctAnswer == answer) {
-                    score.value = (score.value ?: 0) + 10
-                    openPuzzlePiece()
-                } else {
-                }
-                loadNextQuestion()
-            }
-        }
-    }
-    private fun openPuzzlePiece() {
-        val currentState = _puzzleState.value?.toMutableList()
-        val nextClosedIndex = currentState?.indexOfFirst { it == null }
-        if (nextClosedIndex != null && nextClosedIndex in allPuzzlePieces.indices) {
-            currentState[nextClosedIndex] = allPuzzlePieces[nextClosedIndex]
-            _puzzleState.postValue(currentState)
         }
     }
 

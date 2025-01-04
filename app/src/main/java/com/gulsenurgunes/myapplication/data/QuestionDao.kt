@@ -7,7 +7,7 @@ import androidx.room.Query
 
 @Dao
 interface QuestionDao {
-    @Query("SELECT * FROM questions ORDER BY isAnswered=0 LIMIT 1")
+    @Query("SELECT * FROM questions WHERE isAnswered=0 ORDER BY RANDOM() LIMIT 1")
     fun getNextQuestion(): Question?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
