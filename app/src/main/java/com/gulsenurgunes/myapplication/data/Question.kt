@@ -1,4 +1,4 @@
-package com.gulsenurgunes.myapplication
+package com.gulsenurgunes.myapplication.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

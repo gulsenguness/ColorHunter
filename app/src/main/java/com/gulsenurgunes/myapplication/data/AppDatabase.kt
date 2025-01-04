@@ -1,4 +1,4 @@
-package com.gulsenurgunes.myapplication
+package com.gulsenurgunes.myapplication.data
 
 import android.content.Context
 import androidx.room.Database

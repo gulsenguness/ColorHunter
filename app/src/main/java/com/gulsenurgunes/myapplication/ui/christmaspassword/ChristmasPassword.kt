@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.gulsenurgunes.myapplication.ChristmasPasswordViewModel
 import com.gulsenurgunes.myapplication.ui.components.LottieSnow
 
 @Composable

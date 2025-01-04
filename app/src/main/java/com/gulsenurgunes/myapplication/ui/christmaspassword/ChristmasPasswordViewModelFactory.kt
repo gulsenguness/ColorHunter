@@ -1,7 +1,8 @@
-package com.gulsenurgunes.myapplication
+package com.gulsenurgunes.myapplication.ui.christmaspassword
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.gulsenurgunes.myapplication.data.QuestionDao
 
 class ChristmasPasswordViewModelFactory(
     private val questionDao: QuestionDao

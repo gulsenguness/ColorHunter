@@ -26,7 +26,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.gulsenurgunes.myapplication.ChristmasPasswordViewModel
 
 @Composable
 fun PuzzleGameScreen(
@@ -154,5 +153,9 @@ fun ScoreAndProgressSection(score: Int, progress: Int) {
         )
     }
 }
+
+
+
+
 
 

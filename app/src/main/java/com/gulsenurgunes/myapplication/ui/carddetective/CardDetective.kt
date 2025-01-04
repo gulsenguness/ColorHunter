@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.gulsenurgunes.myapplication.R
-import com.gulsenurgunes.myapplication.data.DetectiveCard
+import com.gulsenurgunes.myapplication.data.detectivecard.DetectiveCard
 import com.gulsenurgunes.myapplication.ui.carddetective.GameLogic.checkForMatch
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.FlipCard
 import com.gulsenurgunes.myapplication.ui.components.lottieBellAnimation

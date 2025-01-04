@@ -1,10 +1,13 @@
-package com.gulsenurgunes.myapplication
+package com.gulsenurgunes.myapplication.ui.christmaspassword
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gulsenurgunes.myapplication.R
+import com.gulsenurgunes.myapplication.data.Question
+import com.gulsenurgunes.myapplication.data.QuestionDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -23,32 +26,54 @@ class ChristmasPasswordViewModel(
     private val allPuzzlePieces = listOf(
         R.drawable.noelhediye, R.drawable.noel1, R.drawable.noel2,
         R.drawable.noel3, R.drawable.noel4, R.drawable.noel7,
-        R.drawable.noel8, R.drawable.noel9
+        R.drawable.noel8, R.drawable.noel9, R.drawable.tree
     )
 
     init {
         loadNextQuestion()
         initializePuzzle()
         insertSampleQuestions()
+        checkAnswerAndMoveNext(answer = "")
     }
 
     private fun initializePuzzle() {
         _puzzleState.value = allPuzzlePieces.map { null }
     }
 
-    fun loadNextQuestion() {
+    private fun loadNextQuestion() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val nextQuestion = questionDao.getNextQuestion()
                 if (nextQuestion != null) {
                     _currentQuestion.postValue(nextQuestion)
-                    Log.d("ViewModel", "Next Question: $nextQuestion") // Log ekleyin
                 } else {
                     Log.e("ViewModel", "No question found")
                 }
             } catch (e: Exception) {
                 Log.e("ViewModel", "Error loading question: ${e.message}")
             }
+        }
+    }
+
+    private fun checkAnswerAndMoveNext(answer: String) {
+        viewModelScope.launch {
+            val currentQuestion = currentQuestion.value
+            if (currentQuestion != null) {
+                if (currentQuestion.correctAnswer == answer) {
+                    score.value = (score.value ?: 0) + 10
+                    openPuzzlePiece()
+                } else {
+                }
+update                loadNextQuestion()
+            }
+        }
+    }
+    private fun openPuzzlePiece() {
+        val currentState = _puzzleState.value?.toMutableList()
+        val nextClosedIndex = currentState?.indexOfFirst { it == null }
+        if (nextClosedIndex != null && nextClosedIndex in allPuzzlePieces.indices) {
+            currentState[nextClosedIndex] = allPuzzlePieces[nextClosedIndex]
+            _puzzleState.postValue(currentState)
         }
     }
 

@@ -6,9 +6,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.gulsenurgunes.myapplication.AppDatabase
-import com.gulsenurgunes.myapplication.ChristmasPasswordViewModel
-import com.gulsenurgunes.myapplication.ChristmasPasswordViewModelFactory
+import com.gulsenurgunes.myapplication.data.AppDatabase
+import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPasswordViewModel
+import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPasswordViewModelFactory
 import com.gulsenurgunes.myapplication.ui.carddetective.CardDetective
 import com.gulsenurgunes.myapplication.ui.carddetective.DetectiveViewModel
 import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPassword

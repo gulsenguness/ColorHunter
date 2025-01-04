@@ -1,4 +1,4 @@
-package com.gulsenurgunes.myapplication
+package com.gulsenurgunes.myapplication.data
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -11,7 +11,7 @@ interface QuestionDao {
     fun getNextQuestion(): Question?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertQuestions(questions: com.gulsenurgunes.myapplication.Question)
+    suspend fun insertQuestions(questions: Question)
 
     @Query("UPDATE questions SET isAnswered = 1 WHERE id = :id")
     suspend fun markQuestionAsAnswered(id: Int)

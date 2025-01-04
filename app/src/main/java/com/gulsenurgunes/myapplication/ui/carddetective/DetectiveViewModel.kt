@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.gulsenurgunes.myapplication.data.DetectiveCard
+import com.gulsenurgunes.myapplication.data.detectivecard.DetectiveCard
 
 class DetectiveViewModel(application: Application) : AndroidViewModel(application) {
     private val _score = MutableLiveData<Int>()
