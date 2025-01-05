@@ -77,3 +77,15 @@ fun FlipCard(isFlipped: Boolean, imageRes: Int, onClick: () -> Unit) {
         }
     }
 }
+
+fun getShuffledImages() = listOf(
+    R.drawable.noel1,
+    R.drawable.noel1,
+    R.drawable.noel2,
+    R.drawable.noel2,
+    R.drawable.noel3,
+    R.drawable.noel3,
+    R.drawable.noel4,
+    R.drawable.noel4,
+    R.drawable.noelhediye,
+).shuffled()
