@@ -3,6 +3,7 @@ package com.gulsenurgunes.myapplication.ui.christmaspassword
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,9 +24,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.gulsenurgunes.myapplication.R
 
 @Composable
 fun PuzzleGameScreen(
@@ -49,7 +52,11 @@ fun PuzzleGameScreen(
         Spacer(modifier = Modifier.height(16.dp))
         puzzlePieces?.let { PuzzleSection(puzzlePieces = it) }
         Spacer(modifier = Modifier.height(16.dp))
-        puzzlePieces?.let { ScoreAndProgressSection(score = score, progress = it.count { it != null }) }
+        puzzlePieces?.let {
+            ScoreAndProgressSection(
+                score = score,
+                progress = it.count { it != null })
+        }
     }
 }
 
@@ -70,13 +77,20 @@ fun QuestionSection(
             modifier = Modifier.padding(8.dp)
         )
         option.forEach { option ->
-            Button(
-                onClick = { onOptionSelected(option) },
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 4.dp)
+                    .padding(vertical = 8.dp)
+                    .border(2.dp, Color.Black)
+                    .background(Color.Transparent)
+                    .clickable { onOptionSelected(option) }
             ) {
-                Text(text = option)
+                Text(
+                    text = option,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.Black,
+                    modifier = Modifier.padding(12.dp)
+                )
             }
         }
     }
@@ -99,11 +113,17 @@ fun PuzzleSection(puzzlePieces: List<Int?>) {
                         .background(if (piece != null) Color.White else Color.Gray)
                         .border(1.dp, Color.Black)
                 ) {
-                    piece?.let {
+                    if (piece != null) {
                         Image(
-                            painter = painterResource(id = it),
+                            painter = painterResource(id = piece),
                             contentDescription = "Puzzle Piece",
                             modifier = Modifier.fillMaxSize()
+                        )
+                    } else {
+                        Image(
+                            painter = painterResource(id = R.drawable.tree),
+                            contentDescription = "Closed Puzzle Piece",
+                            modifier = Modifier.fillMaxSize(),
                         )
                     }
                 }

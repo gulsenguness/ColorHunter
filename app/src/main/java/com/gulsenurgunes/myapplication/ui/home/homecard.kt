@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
 @Composable
@@ -18,15 +20,15 @@ fun HomeCard(
     animationId: Int,
     title: String,
     onClick: () -> Unit,
-    cardColor: Color = Color.Red
+    cardColor: Color = Color.Transparent
 ) {
     Card(
         modifier = modifier
             .height(padding.dimension150)
             .clickable { onClick() }
-            .background(cardColor),
+            .background(cardColor)
+            .shadow(elevation = 8.dp, shape = MaterialTheme.shapes.medium),
         shape = MaterialTheme.shapes.medium,
-
     ) {
         Column(
             modifier = Modifier
