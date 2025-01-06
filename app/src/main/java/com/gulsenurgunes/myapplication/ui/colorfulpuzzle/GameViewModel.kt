@@ -4,8 +4,8 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
+
 
 class GameViewModel : ViewModel() {
     val cardStates = MutableList(NUM_OF_CARD_STATES) { mutableStateOf(false) }
@@ -13,8 +13,9 @@ class GameViewModel : ViewModel() {
     private val openedCards = mutableStateListOf<Int>()
     var score = mutableIntStateOf(0)
     var progress = mutableFloatStateOf(0f)
-    var elapsedTime = mutableIntStateOf(0)
+    var elapsedTime = mutableIntStateOf(60)
     var _images = getShuffledImages()
+    var clickCount= mutableIntStateOf(0)
 
     init {
         resetGame()
@@ -27,11 +28,13 @@ class GameViewModel : ViewModel() {
         score.intValue = 0
         progress.floatValue = 0f
         elapsedTime.intValue = 0
+        clickCount.intValue=0
         _images = getShuffledImages().shuffled()
     }
 
-    fun onCardClick(index: Int, images: List<Int>) {
+    fun onCardClick(index: Int) {
         if (cardStates[index].value || openedCards.size >= 2) return
+        clickCount.intValue++
 
         cardStates[index].value = true
         openedCards.add(index)
@@ -42,9 +45,10 @@ class GameViewModel : ViewModel() {
 
             if (_images[firstCard] == _images[secondCard]) {
                 matchedCards.addAll(listOf(firstCard, secondCard))
-                incrementScore()
+                incrementScore(clickCount.intValue)
                 updateProgress()
                 openedCards.clear()
+                clickCount.intValue=0
             } else {
                 android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
                     cardStates[firstCard].value = false
@@ -55,8 +59,12 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    private fun incrementScore() {
-        score.intValue += 10
+    private fun incrementScore(clickCount:Int) {
+        when (clickCount) {
+            2 -> score.intValue += 50
+            4 -> score.intValue += 30
+            else -> score.intValue += 10
+        }
     }
 
     private fun updateProgress() {

@@ -24,10 +24,6 @@ fun ScoreAndProgreddDection(
             text = "Puan: $score",
             style = MaterialTheme.typography.bodySmall
         )
-        Text(
-            text = "Süre: ${elepsedTime}s",
-            style = MaterialTheme.typography.bodySmall
-        )
         LinearProgressIndicator(
             progress = { progress.coerceIn(0f, 1f) },
             modifier = androidx.compose.ui.Modifier

@@ -24,9 +24,9 @@ const val NUM_OF_COLUMNS = 3
 fun ColorfulPuzzle(viewModel: GameViewModel = viewModel()) {
     val cardStates = viewModel.cardStates
     val images = viewModel._images
-    val score = viewModel.score.value
-    val progress = viewModel.progress.value
-    val elapsedTime = viewModel.elapsedTime.value
+    val score = viewModel.score.intValue
+    val progress = viewModel.progress.floatValue
+    val elapsedTime = viewModel.elapsedTime.intValue
 
     Column(
         modifier = Modifier
@@ -47,7 +47,7 @@ fun ColorfulPuzzle(viewModel: GameViewModel = viewModel()) {
                 FlipCard(
                     isFlipped = cardStates[index].value,
                     imageRes = images[index],
-                    onClick = { viewModel.onCardClick(index, images) }
+                    onClick = { viewModel.onCardClick(index) }
                 )
             }
         }
