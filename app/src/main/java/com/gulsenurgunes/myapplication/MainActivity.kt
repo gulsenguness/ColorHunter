@@ -15,7 +15,7 @@ import com.gulsenurgunes.myapplication.ui.carddetective.CardDetective
 import com.gulsenurgunes.myapplication.ui.carddetective.DetectiveViewModel
 import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPassword
 import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPasswordViewModel
-import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.colorfulPuzzle
+import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.ColorfulPuzzle
 import com.gulsenurgunes.myapplication.ui.home.homePage
 import com.gulsenurgunes.myapplication.ui.theme.nyTheme
 
@@ -38,7 +38,7 @@ fun GreetingPreview() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "home") {
             composable("home") { homePage(navController) }
-            composable("colorfulpuzzle") { colorfulPuzzle() }
+            composable("colorfulpuzzle") { ColorfulPuzzle() }
             composable("film") { colorfulMaze() }
             composable("christmaspassword") {
                 val christmasPasswordViewModel: ChristmasPasswordViewModel = viewModel()

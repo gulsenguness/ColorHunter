@@ -11,17 +11,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.gulsenurgunes.myapplication.R
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.gulsenurgunes.myapplication.ui.components.LottieSnow
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
@@ -29,13 +21,12 @@ const val NUM_OF_CARD_STATES = 9
 const val NUM_OF_COLUMNS = 3
 
 @Composable
-fun colorfulPuzzle() {
-    val cardStates = remember { MutableList(NUM_OF_CARD_STATES) { mutableStateOf(false) } }
-    val openedCards = remember { mutableStateListOf<Int>() }
+fun ColorfulPuzzle(viewModel: GameViewModel = viewModel()) {
+    val cardStates = viewModel.cardStates
     val images = getShuffledImages()
-    var score by remember { mutableStateOf(0) }
-    var progress by remember { mutableStateOf(0f) }
-
+    val score = viewModel.score.value
+    val progress = viewModel.progress.value
+    val elapsedTime = viewModel.elapsedTime.value
 
     Column(
         modifier = Modifier
@@ -44,17 +35,7 @@ fun colorfulPuzzle() {
         verticalArrangement = Arrangement.spacedBy(padding.dimension16),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(padding.dimension80))
-        LottieSnow(
-            modifier = Modifier
-                .size(200.dp)
-        )
-        Spacer(modifier = Modifier.height(padding.dimension16))
-        Text(
-            text = "Colorful Puzzle",
-            modifier = Modifier.padding(padding.dimension16)
-        )
-        ScoreAndProgreddDection(score = score, progress = progress)
+        Header(score, progress, elapsedTime)
         Spacer(modifier = Modifier.height(padding.dimension8))
         LazyVerticalGrid(
             columns = GridCells.Fixed(NUM_OF_COLUMNS),
@@ -66,19 +47,20 @@ fun colorfulPuzzle() {
                 FlipCard(
                     isFlipped = cardStates[index].value,
                     imageRes = images[index],
-                    onClick = {
-                        handleCardClick(
-                            index,
-                            cardStates,
-                            openedCards,
-                            images,
-                            { score++ },
-                            { progress += 1f / NUM_OF_CARD_STATES })
-                    }
+                    onClick = { viewModel.onCardClick(index, images) }
                 )
             }
         }
     }
+}
+
+@Composable
+fun Header(score: Int, progress: Float, elapsedTime: Int) {
+    Spacer(modifier = Modifier.height(padding.dimension80))
+    LottieSnow(modifier = Modifier.size(padding.dimension200))
+    Spacer(modifier = Modifier.height(padding.dimension16))
+    Text(text = "Colorful Puzzle", modifier = Modifier.padding(padding.dimension16))
+    ScoreAndProgreddDection(score = score, progress = progress, elepsedTime = elapsedTime)
 }
 
 

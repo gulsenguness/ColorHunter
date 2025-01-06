@@ -88,4 +88,4 @@ fun getShuffledImages() = listOf(
     R.drawable.noel4,
     R.drawable.noel4,
     R.drawable.noelhediye,
-).shuffled()
+)// bu karışttırma işlemi yapıyor .shuffled()

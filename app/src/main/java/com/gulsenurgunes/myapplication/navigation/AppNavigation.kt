@@ -12,7 +12,7 @@ import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPasswordVie
 import com.gulsenurgunes.myapplication.ui.carddetective.CardDetective
 import com.gulsenurgunes.myapplication.ui.carddetective.DetectiveViewModel
 import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPassword
-import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.colorfulPuzzle
+import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.ColorfulPuzzle
 import com.gulsenurgunes.myapplication.ui.home.homePage
 
 
@@ -27,7 +27,7 @@ fun AppNavigation() {
         startDestination = "home"
     ) {
         composable("home") { homePage(navController = navController) }
-        composable("colorfulpuzzle") { colorfulPuzzle() }
+        composable("colorfulpuzzle") { ColorfulPuzzle() }
         composable("colorfulmaze") { colorfulMaze() }
         composable("christmaspassword") {
             val christmasPasswordViewModel: ChristmasPasswordViewModel = viewModel(
