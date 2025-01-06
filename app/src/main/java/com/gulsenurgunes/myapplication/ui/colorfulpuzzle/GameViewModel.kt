@@ -15,7 +15,7 @@ class GameViewModel : ViewModel() {
     var progress = mutableFloatStateOf(0f)
     var elapsedTime = mutableIntStateOf(60)
     var _images = getShuffledImages()
-    var clickCount= mutableIntStateOf(0)
+    private var clickCount= mutableIntStateOf(0)
 
     init {
         resetGame()

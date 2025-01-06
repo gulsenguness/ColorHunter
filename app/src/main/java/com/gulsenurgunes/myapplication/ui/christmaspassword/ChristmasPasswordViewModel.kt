@@ -20,6 +20,8 @@ class ChristmasPasswordViewModel(
     private val _puzzleState = MutableLiveData<List<Int?>?>()
     val puzzleState: MutableLiveData<List<Int?>?> = _puzzleState
 
+    private val clickCountMap = mutableMapOf<Int, Int>()
+
     var score = MutableLiveData(0)
 
     private val allPuzzlePieces = listOf(
@@ -44,6 +46,7 @@ class ChristmasPasswordViewModel(
                 val nextQuestion = questionDao.getNextQuestion()
                 nextQuestion?.let {
                     _currentQuestion.postValue(it)
+                    clickCountMap[it.id]=0
                 }
             } catch (_: Exception) {
             }
@@ -124,19 +127,35 @@ class ChristmasPasswordViewModel(
     fun onAnswerSelected(answer: String) {
         viewModelScope.launch {
             val question = _currentQuestion.value
-            if (question != null && answer == question.correctAnswer) {
-                score.postValue(score.value?.plus(10))
-                questionDao.markQuestionAsAnswered(question.id)
+            if (question != null) {
+                val currentClickCount = clickCountMap[question.id] ?: 0
+                val isCorrect = answer == question.correctAnswer
 
-                val updatedState = _puzzleState.value?.toMutableList()
-                val nextClosedIndex = updatedState?.indexOfFirst { it == null }
-                if (nextClosedIndex != null && nextClosedIndex >= 0) {
-                    updatedState[nextClosedIndex] = allPuzzlePieces[nextClosedIndex]
+                clickCountMap[question.id] = currentClickCount + 1
+
+                if (isCorrect) {
+                    val points = when (currentClickCount) {
+                        0 -> 50
+                        1 -> 30
+                        else -> 10
+                    }
+
+                    score.postValue(score.value?.plus(points))
+                    questionDao.markQuestionAsAnswered(question.id)
+
+                    val updatedState = _puzzleState.value?.toMutableList()
+                    val nextClosedIndex = updatedState?.indexOfFirst { it == null }
+                    if (nextClosedIndex != null && nextClosedIndex >= 0) {
+                        updatedState[nextClosedIndex] = allPuzzlePieces[nextClosedIndex]
+                    }
+                    _puzzleState.postValue(updatedState)
+
+                    loadNextQuestion()
+                } else {
+                    Log.d("ChristmasPassword", "Wrong Answer! Question ID: ${question.id}, Current Click: $currentClickCount")
                 }
-                _puzzleState.postValue(updatedState)
-
-                loadNextQuestion()
             }
         }
     }
+
 }
