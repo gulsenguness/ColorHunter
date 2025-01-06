@@ -23,7 +23,7 @@ const val NUM_OF_COLUMNS = 3
 @Composable
 fun ColorfulPuzzle(viewModel: GameViewModel = viewModel()) {
     val cardStates = viewModel.cardStates
-    val images = getShuffledImages()
+    val images = viewModel._images
     val score = viewModel.score.value
     val progress = viewModel.progress.value
     val elapsedTime = viewModel.elapsedTime.value
@@ -62,6 +62,3 @@ fun Header(score: Int, progress: Float, elapsedTime: Int) {
     Text(text = "Colorful Puzzle", modifier = Modifier.padding(padding.dimension16))
     ScoreAndProgreddDection(score = score, progress = progress, elepsedTime = elapsedTime)
 }
-
-
-

@@ -43,7 +43,7 @@ fun PuzzleGameScreen(
             QuestionSection(
                 question = question.text,
                 option = question.option,
-                onOptionSelected = {answer -> viewModel.onAnswerSelected(answer)}
+                onOptionSelected = { answer -> viewModel.onAnswerSelected(answer) }
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -153,9 +153,3 @@ fun ScoreAndProgressSection(score: Int, progress: Int) {
         )
     }
 }
-
-
-
-
-
-

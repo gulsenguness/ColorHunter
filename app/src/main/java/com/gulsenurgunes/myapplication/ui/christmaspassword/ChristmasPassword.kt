@@ -26,4 +26,3 @@ fun ChristmasPassword(viewModel: ChristmasPasswordViewModel) {
         PuzzleGameScreen(viewModel)
     }
 }
-

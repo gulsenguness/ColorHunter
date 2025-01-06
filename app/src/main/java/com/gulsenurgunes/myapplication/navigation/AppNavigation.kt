@@ -7,14 +7,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.gulsenurgunes.myapplication.data.AppDatabase
-import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPasswordViewModel
-import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPasswordViewModelFactory
 import com.gulsenurgunes.myapplication.ui.carddetective.CardDetective
 import com.gulsenurgunes.myapplication.ui.carddetective.DetectiveViewModel
 import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPassword
+import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPasswordViewModel
+import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPasswordViewModelFactory
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.ColorfulPuzzle
-import com.gulsenurgunes.myapplication.ui.home.homePage
-
+import com.gulsenurgunes.myapplication.ui.home.HomePage
 
 @Composable
 fun AppNavigation() {
@@ -26,9 +25,9 @@ fun AppNavigation() {
         navController = navController,
         startDestination = "home"
     ) {
-        composable("home") { homePage(navController = navController) }
+        composable("home") { HomePage(navController = navController) }
         composable("colorfulpuzzle") { ColorfulPuzzle() }
-        composable("colorfulmaze") { colorfulMaze() }
+        composable("colorfulmaze") { ColorfulMaze() }
         composable("christmaspassword") {
             val christmasPasswordViewModel: ChristmasPasswordViewModel = viewModel(
                 factory = ChristmasPasswordViewModelFactory(questionDao)
@@ -42,7 +41,5 @@ fun AppNavigation() {
     }
 }
 
-
-
 @Composable
-fun colorfulMaze() {}
+fun ColorfulMaze() {}

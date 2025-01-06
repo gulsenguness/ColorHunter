@@ -11,7 +11,6 @@ import com.gulsenurgunes.myapplication.data.QuestionDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 class ChristmasPasswordViewModel(
     private val questionDao: QuestionDao
 ) : ViewModel() {
@@ -43,13 +42,10 @@ class ChristmasPasswordViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val nextQuestion = questionDao.getNextQuestion()
-                if (nextQuestion != null) {
-                    _currentQuestion.postValue(nextQuestion)
-                } else {
-                    Log.e("ViewModel", "No question found")
+                nextQuestion?.let {
+                    _currentQuestion.postValue(it)
                 }
-            } catch (e: Exception) {
-                Log.e("ViewModel", "Error loading question: ${e.message}")
+            } catch (_: Exception) {
             }
         }
     }

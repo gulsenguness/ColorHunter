@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.gulsenurgunes.myapplication.R
 import com.gulsenurgunes.myapplication.ui.components.LottieSnow
@@ -19,7 +18,7 @@ import com.gulsenurgunes.myapplication.ui.theme.NYTheme
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 
 @Composable
-fun homePage(
+fun HomePage(
     navController: NavController
 ) {
     Column(

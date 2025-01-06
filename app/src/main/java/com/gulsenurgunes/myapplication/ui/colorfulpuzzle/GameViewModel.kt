@@ -14,7 +14,7 @@ class GameViewModel : ViewModel() {
     var score = mutableIntStateOf(0)
     var progress = mutableFloatStateOf(0f)
     var elapsedTime = mutableIntStateOf(0)
-    private var _images = mutableStateListOf<Int>()
+    var _images = getShuffledImages()
 
     init {
         resetGame()
@@ -27,8 +27,7 @@ class GameViewModel : ViewModel() {
         score.intValue = 0
         progress.floatValue = 0f
         elapsedTime.intValue = 0
-        _images = getShuffledImages().toMutableStateList()
-
+        _images = getShuffledImages().shuffled()
     }
 
     fun onCardClick(index: Int, images: List<Int>) {
@@ -41,7 +40,7 @@ class GameViewModel : ViewModel() {
             val firstCard = openedCards[0]
             val secondCard = openedCards[1]
 
-            if (images[firstCard] == images[secondCard]) {
+            if (_images[firstCard] == _images[secondCard]) {
                 matchedCards.addAll(listOf(firstCard, secondCard))
                 incrementScore()
                 updateProgress()
@@ -60,12 +59,7 @@ class GameViewModel : ViewModel() {
         score.intValue += 10
     }
 
-    fun updateTime() {
-        elapsedTime.intValue++
-    }
-
     private fun updateProgress() {
         progress.floatValue = (score.intValue.toFloat() / (NUM_OF_CARD_STATES / 2))
     }
-
 }
