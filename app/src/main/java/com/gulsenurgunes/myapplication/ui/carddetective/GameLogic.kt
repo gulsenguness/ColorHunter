@@ -1,17 +1,18 @@
 package com.gulsenurgunes.myapplication.ui.carddetective
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.gulsenurgunes.myapplication.data.detectivecard.DetectiveCard
+import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -89,19 +90,23 @@ object GameLogic {
 }
 
 @Composable
-fun DisplayScore(score: Int) {
-    Box(
+fun DisplayScore(score: Int,progress:Float) {
+    Column(
         modifier = Modifier
-            .padding(16.dp)
-            .background(Color.LightGray)
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Score: $score",
-            color = Color.Black,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
+            text = "Puan: $score",
+            style = MaterialTheme.typography.bodySmall
+        )
+        LinearProgressIndicator(
+            progress = progress.coerceIn(0f, 1f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
         )
     }
 }
+

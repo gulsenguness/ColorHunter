@@ -50,10 +50,6 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
         _selectedCards.value = newSelectedCards
     }
 
-//    private fun resetSelectedCards() {
-//        _selectedCards.value = emptyList()
-//    }
-
     fun updateScore(newScore: Int) {
         _score.value = newScore
     }
@@ -73,10 +69,4 @@ class DetectiveViewModel(application: Application) : AndroidViewModel(applicatio
             setImageToMatch(null)
         }
     }
-
-//    fun resetGame() {
-//        _score.value = 0
-//        resetSelectedCards()
-//        nextImageToMatch()
-//    }
 }

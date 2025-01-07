@@ -10,11 +10,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.gulsenurgunes.myapplication.navigation.AppNavigation
-import com.gulsenurgunes.myapplication.navigation.ColorfulMaze
 import com.gulsenurgunes.myapplication.ui.carddetective.CardDetective
 import com.gulsenurgunes.myapplication.ui.carddetective.DetectiveViewModel
 import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPassword
 import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPasswordViewModel
+import com.gulsenurgunes.myapplication.ui.colorfulmaze.ColorfulMaze
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.ColorfulPuzzle
 import com.gulsenurgunes.myapplication.ui.home.HomePage
 import com.gulsenurgunes.myapplication.ui.theme.nyTheme

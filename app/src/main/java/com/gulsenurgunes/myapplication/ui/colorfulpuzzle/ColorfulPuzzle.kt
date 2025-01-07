@@ -56,9 +56,7 @@ fun ColorfulPuzzle(viewModel: GameViewModel = viewModel()) {
 
 @Composable
 fun Header(score: Int, progress: Float, elapsedTime: Int) {
-    Spacer(modifier = Modifier.height(padding.dimension80))
     LottieSnow(modifier = Modifier.size(padding.dimension200))
-    Spacer(modifier = Modifier.height(padding.dimension16))
     Text(text = "Colorful Puzzle", modifier = Modifier.padding(padding.dimension16))
     ScoreAndProgreddDection(score = score, progress = progress, elepsedTime = elapsedTime)
 }

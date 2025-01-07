@@ -33,7 +33,9 @@ import androidx.compose.ui.unit.dp
 import com.gulsenurgunes.myapplication.R
 import com.gulsenurgunes.myapplication.data.detectivecard.DetectiveCard
 import com.gulsenurgunes.myapplication.ui.carddetective.GameLogic.checkForMatch
+import com.gulsenurgunes.myapplication.ui.christmaspassword.PuzzleGameScreen
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.FlipCard
+import com.gulsenurgunes.myapplication.ui.components.LottieSnow
 import com.gulsenurgunes.myapplication.ui.components.lottieBellAnimation
 import com.gulsenurgunes.myapplication.ui.theme.NYTheme.padding
 import kotlinx.coroutines.delay
@@ -46,6 +48,7 @@ fun CardDetective(
     val score by viewModel.score.observeAsState(0)
     val imageToMatch by viewModel.imageToMatch.observeAsState(null)
     val isGameReady by viewModel.isGameReady.observeAsState(false)
+    val progress = score / 100f
 
     LaunchedEffect(Unit) {
         initializeGame(viewModel)
@@ -58,10 +61,9 @@ fun CardDetective(
             .background(Color.White)
             .padding(padding.dimension16)
     ) {
-        Spacer(modifier = Modifier.height(padding.dimension80))
-        lottieBellAnimation()
+        DisplayHeader()
         Spacer(modifier = Modifier.height(padding.dimension16))
-        DisplayScore(score)
+        DisplayScore(score, progress = progress)
         DisplayCards(cards, viewModel, imageToMatch, isGameReady)
         DisplayImageToMatch(viewModel)
     }
@@ -69,6 +71,22 @@ fun CardDetective(
 
 const val NUM_OF_CARD_STATES = 9
 const val NUM_OF_COLUMNS = 3
+@Composable
+private fun DisplayHeader() {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        LottieSnow(
+            modifier = Modifier.size(200.dp)
+        )
+        Text(
+            text = "Card Detective",
+            color = Color.Black,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+    }
+}
 
 @Composable
 private fun DisplayCards( // How it should look when the cards are face down and face down
@@ -83,12 +101,7 @@ private fun DisplayCards( // How it should look when the cards are face down and
             .padding(padding.dimension16),
         verticalArrangement = Arrangement.spacedBy(padding.dimension16)
     ) {
-        Text(
-            text = "Card Detective",
-            modifier = Modifier
-                .padding(padding.dimension16)
-                .padding()
-        )
+
         if (imageToMatch != null) {
             Box(
                 modifier = Modifier

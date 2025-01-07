@@ -12,6 +12,7 @@ import com.gulsenurgunes.myapplication.ui.carddetective.DetectiveViewModel
 import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPassword
 import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPasswordViewModel
 import com.gulsenurgunes.myapplication.ui.christmaspassword.ChristmasPasswordViewModelFactory
+import com.gulsenurgunes.myapplication.ui.colorfulmaze.ColorfulMaze
 import com.gulsenurgunes.myapplication.ui.colorfulpuzzle.ColorfulPuzzle
 import com.gulsenurgunes.myapplication.ui.home.HomePage
 
@@ -41,5 +42,3 @@ fun AppNavigation() {
     }
 }
 
-@Composable
-fun ColorfulMaze() {}
